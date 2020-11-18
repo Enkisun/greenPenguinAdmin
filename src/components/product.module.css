@@ -1,0 +1,42 @@
+.tableTr {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 150px;
+}
+
+.tableTd {
+  width: 15%;
+  padding: 15px 5px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background-color: #fff;
+  color: #4742bb;
+  font-size: .9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: font-size .1s;
+  text-transform: uppercase;
+  font-family: inherit;
+}
+
+.btn:hover {
+  font-size: 1rem;
+}
+
+.editBtn {
+  right: -65px;
+}
+
+.deleteBtn {
+  right: -150px;
+}

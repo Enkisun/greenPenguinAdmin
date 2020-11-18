@@ -1,59 +1,53 @@
-import React, { useCallback } from 'react';
-import { useSelector } from 'react-redux';
-import { setModalTC } from '../redux/modalReducer';
-import { addProduct, getProductsTC } from '../redux/productsReducer';
-import { CustomReduxForm } from '../common/reduxForm';
-import Pagination from '../common/pagination';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProductsTC } from '../redux/productsReducer';
 import { useHttp } from '../hooks/http.hook';
+import Pagination from '../common/Pagination';
+import CreateProduct from './CreateProduct';
 import Product from './Product';
-import classes from "../app.module.css";
+import classes from "./productsList.module.css";
 
-const ProductsList = ({ dispatch, currentPage, limit }) => {
+const ProductsList = () => {
 
+  const dispatch = useDispatch();
+
+  let currentPage = useSelector(state => state.products.currentPage);
+  let limit = useSelector(state => state.products.limit);
   let products = useSelector(state => state.products.products);
 
+  useEffect(() => {
+    dispatch(getProductsTC(currentPage, limit));
+  }, []);
+
   let { request } = useHttp();
-
-  const setModalActive = useCallback(() => dispatch(setModalTC(true)), []);
-
-  const onSubmit = async (formdata) => {
-    try {
-      await dispatch(setModalTC(false));
-      await request('/api/products', 'POST', {...formdata});
-      dispatch(addProduct(formdata));
-    } catch (e) {}
-  }
 
   const onPageChanged = newCurrentPage => dispatch(getProductsTC(newCurrentPage, limit));
 
   const items = products && products.map(product => (
-    <Product product={product} request={request} key={product.id} />
+    <Product key={product.id} product={product} request={request} dispatch={dispatch} />
   ));
 
   return (
     <div className={classes.container}>
-      <div>
-        <header className={classes.header}>
-          <h1>Products List</h1>
-          <button className={classes.btn} onClick={setModalActive}>Create</button>
-        </header>
+      <header className={classes.header}>
+        <h1>Products List</h1>
+        <CreateProduct request={request} />
+      </header>
 
-        <table className={classes.table}>
-          <tbody>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Category</th>
-              <th>Trademark</th>
-              <th>Volume</th>
-              <th>Price</th>
-            </tr>
-            {items}
-          </tbody>
-        </table>
+      <table className={classes.table}>
+        <tbody>
+          <tr className={classes.tableTr}>
+            <th className={classes.tableTh}>ID</th>
+            <th className={classes.tableTh}>Name</th>
+            <th className={classes.tableTh}>Category</th>
+            <th className={classes.tableTh}>Trademark</th>
+            <th className={classes.tableTh}>Volume</th>
+            <th className={classes.tableTh}>Price</th>
+          </tr>
 
-        <CustomReduxForm onSubmit={onSubmit} />
-      </div>
+          {items}
+        </tbody>
+      </table>
 
       <Pagination currentPage={currentPage} pageSize={limit} onPageChanged={onPageChanged} />
     </div>

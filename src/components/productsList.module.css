@@ -1,0 +1,39 @@
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+  height: 100px;
+  margin-left: auto;
+  padding: 0 25px;
+  color: #515365;
+}
+
+.table {
+  width: 80%;
+  margin-left: auto;
+  padding-right: 25px;
+  color: #515365;
+}
+
+.tableTr {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 150px;
+}
+
+.tableTh {
+  width: 15%;
+  padding: 15px 5px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

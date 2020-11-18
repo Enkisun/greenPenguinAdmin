@@ -6,8 +6,8 @@ const SET_TOTAL_PRODUCTS_COUNT = "SET_TOTAL_PRODUCTS_COUNT";
 let initialState = {
   products: [],
   currentPage: 1,
-  limit: 1,
-  totalProductsCount: 0
+  limit: 5,
+  totalProductsCount: 0,
 }
 
 const productsReducer = (state = initialState, action) => {

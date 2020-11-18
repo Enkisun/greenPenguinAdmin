@@ -1,0 +1,27 @@
+input, textarea {
+  width: 350px;
+  height: 100%;
+  padding: 28px 15px 10px;
+  border: 1px solid #4742bb;
+  border-radius: 5px;
+  font-family: 'Exo', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+textarea {
+  resize: none;
+}
+
+.formError {
+  border: 1px solid red
+}
+
+.spanError {
+  position: absolute;
+  top: 8px;
+  right: 15px;
+  font-size: .7rem;
+  color: red;
+}

@@ -1,24 +1,30 @@
 import React from 'react';
-import classes from "../app.module.css";
+import { useSelector } from 'react-redux';
+import { getProductsTC } from '../redux/productsReducer';
+import classes from "./product.module.css";
 
-const Product = ({ product, request }) => {
+const Product = ({ product, request, dispatch }) => {
+
+  let currentPage = useSelector(state => state.products.currentPage);
+  let limit = useSelector(state => state.products.limit);
 
   const deleteHandler = async (id) => {
     try {
       await request('/api/products', 'DELETE', { id });
+      dispatch(getProductsTC(currentPage, limit));
     } catch (e) {}
   }
 
   return (
-    <tr>
-      <td>{product._id}</td>
-      <td>{product.name}</td>
-      <td>{product.category}</td>
-      <td>{product.trademark}</td>
-      <td>{product.volume}</td>
-      <td>{product.price}</td>
-      <button className={`${classes.btn} ${classes.editBtn}`} onClick={() => deleteHandler(product.id)}>Edit</button>
-      <button className={`${classes.btn} ${classes.deleteBtn}`} onClick={() => deleteHandler(product.id)}>Delete</button>
+    <tr className={classes.tableTr}>
+      <td className={classes.tableTd}>{product._id}</td>
+      <td className={classes.tableTd}>{product.name}</td>
+      <td className={classes.tableTd}>{product.category}</td>
+      <td className={classes.tableTd}>{product.trademark}</td>
+      <td className={classes.tableTd}>{product.volume}</td>
+      <td className={classes.tableTd}>{product.price}</td>
+      <button className={`${classes.btn} ${classes.editBtn}`} onClick={() => deleteHandler(product._id)}>Edit</button>
+      <button className={`${classes.btn} ${classes.deleteBtn}`} onClick={() => deleteHandler(product._id)}>Delete</button>
     </tr>
   )
 }

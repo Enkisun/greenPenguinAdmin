@@ -1,7 +1,7 @@
 const SET_MODAL = "SET_MODAL";
 
 let initialState = {
-  modal: false
+  modal: false,
 }
 
 const modalReducer = (state = initialState, action) => {
@@ -16,10 +16,6 @@ const modalReducer = (state = initialState, action) => {
   }
 }
 
-const setModal = bool => ({ type: SET_MODAL, bool });
-
-export const setModalTC = bool => async dispatch => {
-  dispatch(setModal(bool))
-};
+export const setModal = bool => ({ type: SET_MODAL, bool });
 
 export default modalReducer;
