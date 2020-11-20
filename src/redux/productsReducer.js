@@ -49,6 +49,13 @@ const handleErrors = response => {
   return response;
 }
 
+const arrayBufferToBase64 = buffer => {
+  let binary = '';
+  let bytes = [].slice.call(new Uint8Array(buffer));
+  bytes.forEach(b => binary += String.fromCharCode(b));
+  return window.btoa(binary);
+};
+
 export const getProductsTC = (currentPage, limit) => async dispatch => {
   await dispatch(deleteProducts());
   await dispatch(setCurrentPage(currentPage));
@@ -59,7 +66,17 @@ export const getProductsTC = (currentPage, limit) => async dispatch => {
 
   if (json) {
     await dispatch(setTotalProductsCount(json.totalProductsCount.totalProductsCount));
-    await Promise.all(json.products.map(async product => await dispatch(addProduct(product)) ));
+    await Promise.all(json.products.map(async product => {
+
+      if (product.image) {
+        const base64Flag = `data:${product.image.contentType};base64,`;
+        const imageStr = arrayBufferToBase64(product.image.data.data);
+        product.image = base64Flag + imageStr;
+      }
+
+      await dispatch(addProduct(product)) 
+      
+    }));
   }
 };
 

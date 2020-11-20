@@ -21,7 +21,7 @@ const Pagination = ({ currentPage, pageSize, onPageChanged, portionSize = 3 }) =
   let portionItems = pages.filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber);
   let lastPage = pages[pages.length - 1];
 
-  if (totalProductsCount < pageSize) return <></>
+  if (totalProductsCount <= pageSize) return <></>
 
   return (
     <div className={classes.paginationWrapper}>

@@ -37,7 +37,8 @@ const ProductsList = () => {
       <table className={classes.table}>
         <tbody>
           <tr className={classes.tableTr}>
-            <th className={classes.tableTh}>ID</th>
+            <th className={classes.tableTh}>Image</th>
+            {/* <th className={classes.tableTh}>ID</th> */}
             <th className={classes.tableTh}>Name</th>
             <th className={classes.tableTh}>Category</th>
             <th className={classes.tableTh}>Trademark</th>

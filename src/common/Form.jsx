@@ -28,15 +28,12 @@ const AddForm = ({ handleSubmit }) => {
     onClickOutside();
   }, [modal]);
 
-  // const uploadImage = () => {
-  //   let form = document.getElementById("uploadImage");
-  //   debugger
-  //   let formData = new FormData(form);
-  //   fetch('api/products', { method: 'POST', body: formData });
-  // }
+  const onSubmit = () => {
+    fetch('api/products', { method: 'POST', body: new FormData("ProductForm") });
+  }
 
   return (
-    <form onSubmit={handleSubmit} className={cn(classes.formParams, { [classes.formParamsActive]: modal })} ref={createRef}>
+    <form id="form" onSubmit={handleSubmit} className={cn(classes.formParams, { [classes.formParamsActive]: modal })} ref={createRef}>
       <div className={classes.formInputs}>
         <div className={classes.group}>
           <label htmlFor="name">Name</label>
@@ -65,15 +62,23 @@ const AddForm = ({ handleSubmit }) => {
       </div>
 
       <div className={classes.formInputs}>
-        <div className={classes.group}>
+        {/* <div className={classes.group}>
           <label htmlFor="description">Description</label>
           <Field validate={[requiredField]} name="description" component={Textarea} />
+        </div> */}
+
+        <div className={classes.group}>
+          <input type="file" id="imageSrc" name="imageSrc" accept="image/*"  />
+          {/* onChange={() => uploadImage()} */}
         </div>
 
-        <button className={classes.submitButton}>Save</button>
+        <button className={classes.submitButton} type='submit'>Save</button>
       </div>
     </form>
+
+
   );
 };
+
 
 export const CustomReduxForm = reduxForm({ form: "ProductForm" })(AddForm);

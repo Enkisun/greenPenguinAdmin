@@ -5,7 +5,7 @@ import { setModal } from '../redux/modalReducer';
 import { addProduct } from '../redux/productsReducer';
 import classes from './createProduct.module.css';
 
-const CreateProduct = ({ request }) => {
+const CreateProduct = () => {
 
   let dispatch = useDispatch();
 
@@ -13,7 +13,15 @@ const CreateProduct = ({ request }) => {
 
   const onSubmit = async (formdata) => {
     try {
-      await request('/api/products', 'POST', {...formdata});
+      let formData = new FormData();
+      let imageFile = document.getElementById("imageSrc").files[0];
+      formData.append("image", imageFile);
+      formData.append("name", formdata.name);
+      formData.append("category", formdata.category);
+      formData.append("trademark", formdata.trademark);
+      formData.append("volume", formdata.volume);
+      formData.append("price", formdata.price);
+      await fetch('api/products', { method: 'POST', body: formData });
       dispatch(addProduct(formdata));
       dispatch(setModal(false));
     } catch (e) {}
