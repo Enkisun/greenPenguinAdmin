@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Exo:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 html,
 body {
@@ -22,4 +22,9 @@ a {
   outline-style: none;
   outline-width: 0px !important;
   outline-color: none !important;
+}
+
+::marker {
+  font-size: 8px;
+  font-family: system-ui;
 }

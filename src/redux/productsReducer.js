@@ -56,6 +56,19 @@ const arrayBufferToBase64 = buffer => {
   return window.btoa(binary);
 };
 
+export const addProductTC = newProduct => async dispatch => {
+  const result = await handleErrors(newProduct);
+  const json = await result.json();
+
+  if (json) {
+    const base64Flag = `data:${json.image.contentType};base64,`;
+    const imageStr = arrayBufferToBase64(json.image.data.data);
+    json.image = base64Flag + imageStr;
+  }
+
+  dispatch(addProduct(json));
+}
+
 export const getProductsTC = (currentPage, limit) => async dispatch => {
   await dispatch(deleteProducts());
   await dispatch(setCurrentPage(currentPage));
@@ -74,8 +87,7 @@ export const getProductsTC = (currentPage, limit) => async dispatch => {
         product.image = base64Flag + imageStr;
       }
 
-      await dispatch(addProduct(product)) 
-      
+      await dispatch(addProduct(product));
     }));
   }
 };

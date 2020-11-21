@@ -28,10 +28,6 @@ const AddForm = ({ handleSubmit }) => {
     onClickOutside();
   }, [modal]);
 
-  const onSubmit = () => {
-    fetch('api/products', { method: 'POST', body: new FormData("ProductForm") });
-  }
-
   return (
     <form id="form" onSubmit={handleSubmit} className={cn(classes.formParams, { [classes.formParamsActive]: modal })} ref={createRef}>
       <div className={classes.formInputs}>
@@ -43,6 +39,11 @@ const AddForm = ({ handleSubmit }) => {
         <div className={classes.group}>
           <label htmlFor="category">Category</label>
           <Field validate={[requiredField]} name="category" component={Input} />
+        </div>
+
+        <div className={classes.group}>
+          <label htmlFor="subCategory">subCategory</label>
+          <Field validate={[requiredField]} name="subCategory" component={Input} />
         </div>
 
         <div className={classes.group}>
@@ -69,7 +70,6 @@ const AddForm = ({ handleSubmit }) => {
 
         <div className={classes.group}>
           <input type="file" id="imageSrc" name="imageSrc" accept="image/*"  />
-          {/* onChange={() => uploadImage()} */}
         </div>
 
         <button className={classes.submitButton} type='submit'>Save</button>

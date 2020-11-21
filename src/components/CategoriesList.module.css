@@ -1,0 +1,22 @@
+.container {
+  width: 20%;
+  margin: 0 10px;
+  padding-right: 20px;
+  overflow-x: hidden;
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+}
+
+.categoriesListTitle {
+  margin-bottom: 10px;
+  font-size: inherit;
+  color: #121112;
+}
+
+.categoriesList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: solid 1px #979797;
+  border-top: none;
+}

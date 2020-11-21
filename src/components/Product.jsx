@@ -20,9 +20,8 @@ const Product = ({ product, request, dispatch }) => {
       <td className={classes.tableTd}>
         <img className={classes.productImage} src={product.image} alt="productImage" />
       </td>
-      {/* <td className={classes.tableTd}>{product._id}</td> */}
       <td className={classes.tableTd}>{product.name}</td>
-      <td className={classes.tableTd}>{product.category}</td>
+      <td className={classes.tableTd}>{product.category} {product.subCategory}</td>
       <td className={classes.tableTd}>{product.trademark}</td>
       <td className={classes.tableTd}>{product.volume}</td>
       <td className={classes.tableTd}>{product.price}</td>

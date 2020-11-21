@@ -1,0 +1,40 @@
+.categoryTitle {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 7px 0 10px 16px;
+  border-top: solid 1px #979797;
+  background-color: rgba(95, 158, 82, 0.12);
+  font-size: 15px;
+  color: #666;
+  cursor: pointer;
+}
+
+.categoryTitleActive {
+  padding: 9px 0 9px 16px;
+  background-color: #5f9e52;
+  color: #fff;
+}
+
+.categoryTitleActive + .subCategories {
+  display: block;
+}
+
+.subCategories {
+  display: none;
+  padding: 4px 0 4px 17px;
+  overflow-wrap: break-word;
+  list-style-position: inside;
+}
+
+.subCategory {
+  width: fit-content;
+  padding: 5px 0 5px;
+  font-size: 15px;
+  color: #666;
+  cursor: pointer;
+}
+
+.subCategoryActive {
+  color: #5f9e52;
+}

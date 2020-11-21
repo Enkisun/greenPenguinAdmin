@@ -24,7 +24,7 @@ const ProductsList = () => {
   const onPageChanged = newCurrentPage => dispatch(getProductsTC(newCurrentPage, limit));
 
   const items = products && products.map(product => (
-    <Product key={product.id} product={product} request={request} dispatch={dispatch} />
+    <Product key={product._id} product={product} request={request} dispatch={dispatch} />
   ));
 
   return (
@@ -38,7 +38,6 @@ const ProductsList = () => {
         <tbody>
           <tr className={classes.tableTr}>
             <th className={classes.tableTh}>Image</th>
-            {/* <th className={classes.tableTh}>ID</th> */}
             <th className={classes.tableTh}>Name</th>
             <th className={classes.tableTh}>Category</th>
             <th className={classes.tableTh}>Trademark</th>
