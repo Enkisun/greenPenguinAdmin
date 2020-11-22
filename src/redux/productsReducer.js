@@ -6,7 +6,7 @@ const SET_TOTAL_PRODUCTS_COUNT = "SET_TOTAL_PRODUCTS_COUNT";
 let initialState = {
   products: [],
   currentPage: 1,
-  limit: 5,
+  limit: 3,
   totalProductsCount: 0,
 }
 
@@ -69,11 +69,11 @@ export const addProductTC = newProduct => async dispatch => {
   dispatch(addProduct(json));
 }
 
-export const getProductsTC = (currentPage, limit) => async dispatch => {
+export const getProductsTC = (currentPage, limit, category = '', subCategory = '') => async dispatch => {
   await dispatch(deleteProducts());
   await dispatch(setCurrentPage(currentPage));
 
-  const response = await fetch(`/api/products?page=${currentPage}&limit=${limit}`);
+  const response = await fetch(`/api/products?page=${currentPage}&limit=${limit}&category=${category}&subCategory=${subCategory}`);
   const result = await handleErrors(response);
   const json = await result.json();
 

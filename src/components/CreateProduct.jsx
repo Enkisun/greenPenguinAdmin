@@ -26,7 +26,7 @@ const CreateProduct = () => {
       formData.append("volume", formdata.volume);
       formData.append("price", formdata.price);
       await request('api/categories', 'POST', {category: formdata.category, subCategory: formdata.subCategory} );
-      let response = await fetch('api/products', { method: 'POST', body: formData });
+      await fetch('api/products', { method: 'POST', body: formData });
       dispatch(getProductsTC(formdata));
       dispatch(setModal(false));
     } catch (e) {}

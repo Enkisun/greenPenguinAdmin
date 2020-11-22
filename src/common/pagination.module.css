@@ -1,36 +1,40 @@
 .paginationWrapper {
   display: flex;
   justify-content: center;
-  margin: 35px 25px 50px auto;
-  width: 80%;
+  margin: 35px 0;
 }
 
-button {
-  border: none;
-  margin: 0 5px;
-  background-color: #3f4257;
-  color: white;
-  cursor: pointer;
-}
-
-.pageNumber {
-  width: 28px;
-  height: 28px;
-}
-
-.selectedPage { 
-  background-color: #ff5e3a;
-}
-
-.move {
-  padding: 0 5px;
-  background-color: #ff5e3a;
-}
-
-span {
+.extremePages {
   display: none;
 }
 
 .activeDots {
   display: inline;
+  width: 28px;
+  text-align: center;
+  vertical-align: sub;
+  cursor: default;
+}
+
+.pageNumber {
+  display: block;
+  min-width: 28px;
+  height: 28px;
+  margin: 0 5px;
+  border: 1px solid #cadcb0;
+  background-color: #fff;
+  color: #666;
+  text-align: center;
+  transition: background-color 1s, color .5s;
+  cursor: pointer;
+}
+
+.pageNumber:hover {
+  background-color: #5f9e52;
+  color: #fff;
+}
+
+.selectedPage { 
+  background-color: #5f9e52;
+  color: #fff;
 }

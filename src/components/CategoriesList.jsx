@@ -6,7 +6,8 @@ import classes from './CategoriesList.module.css';
 
 const CategoriesList = () => {
 
-  const [subActive, setSubActive] = useState('');
+  const [activeCategory, setActiveCategory] = useState(null);
+  const [activeSubCategory, setActiveSubCategory] = useState('');
 
   const dispatch = useDispatch();
 
@@ -17,7 +18,13 @@ const CategoriesList = () => {
   let categories = useSelector(state => state.categories.categories);
 
   const items = categories && categories.map(category => (
-    <Category key={category._id} category={category} subActive={subActive} setSubActive={setSubActive} />
+    <Category key={category._id}
+     category={category}
+     activeCategory={activeCategory}
+     setActiveCategory={setActiveCategory}
+     activeSubCategory={activeSubCategory}
+     setActiveSubCategory={setActiveSubCategory}
+    />
   ));
 
   return (

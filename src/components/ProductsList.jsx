@@ -1,13 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductsTC } from '../redux/productsReducer';
 import { useHttp } from '../hooks/http.hook';
 import Pagination from '../common/Pagination';
+import Preloader from '../common/Preloader';
 import CreateProduct from './CreateProduct';
 import Product from './Product';
 import classes from "./productsList.module.css";
 
 const ProductsList = () => {
+
+  let [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -15,13 +18,17 @@ const ProductsList = () => {
   let limit = useSelector(state => state.products.limit);
   let products = useSelector(state => state.products.products);
 
+  const onPageChanged = (newCurrentPage) => {
+    setLoading(true)
+    dispatch(getProductsTC(newCurrentPage, limit))
+      .then(() => setLoading(false));
+  }
+
   useEffect(() => {
-    dispatch(getProductsTC(currentPage, limit));
+    onPageChanged(currentPage);
   }, []);
 
   let { request } = useHttp();
-
-  const onPageChanged = newCurrentPage => dispatch(getProductsTC(newCurrentPage, limit));
 
   const items = products && products.map(product => (
     <Product key={product._id} product={product} request={request} dispatch={dispatch} />
@@ -38,14 +45,16 @@ const ProductsList = () => {
         <tbody>
           <tr className={classes.tableTr}>
             <th className={classes.tableTh}>Image</th>
-            <th className={classes.tableTh}>Name</th>
             <th className={classes.tableTh}>Category</th>
+            <th className={classes.tableTh}>Subcategory</th>
             <th className={classes.tableTh}>Trademark</th>
+            <th className={classes.tableTh}>Name</th>
             <th className={classes.tableTh}>Volume</th>
             <th className={classes.tableTh}>Price</th>
+            <th className={classes.tableTh}>Actions</th>
           </tr>
 
-          {items}
+          {loading ? <Preloader /> : items}
         </tbody>
       </table>
 

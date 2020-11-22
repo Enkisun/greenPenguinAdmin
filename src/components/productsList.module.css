@@ -1,22 +1,27 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-    margin-left: auto;
+  width: 100%;
 }
 
 .header {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   height: 100px;
   padding: 0 25px;
-  color: #515365;
+  color: #121112;
+}
+
+.header h1 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .table {
+  width: inherit;
   padding-right: 25px;
-  color: #515365;
+  color: #666;
 }
 
 .tableTr {
@@ -24,7 +29,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-right: 150px;
+  color: #fff;
+  background-color: #5f9e52;
 }
 
 .tableTh {

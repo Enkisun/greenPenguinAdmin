@@ -1,23 +1,30 @@
-import React, { useState } from 'react';
+import React, { useCallback } from 'react';
 import cn from 'classnames';
 import classes from './category.module.css';
 import Subcategory from './Subcategory';
 
-const Category = ({ category, subActive, setSubActive }) => {
+const Category = ({ category, activeCategory, setActiveCategory, activeSubCategory, setActiveSubCategory }) => {
 
-  const [isCategoryActive, setCategoryActive] = useState(false);
+  const changeFlag = useCallback(() => {
+    activeCategory === category._id ? setActiveCategory(null) : setActiveCategory(category._id);
+  }, [activeCategory, category]);
   
   const items = category.subCategory.map(subcategory => (
-    <Subcategory key={subcategory._id} subcategory={subcategory} subActive={subActive} setSubActive={setSubActive} />
+    <Subcategory key={subcategory._id}
+      category={category.category}
+      subcategory={subcategory}
+      activeSubCategory={activeSubCategory}
+      setActiveSubCategory={setActiveSubCategory}
+    />
   ));
 
   return (
     <li className={classes.category}>
-      <p className={cn(classes.categoryTitle, {[classes.categoryTitleActive]: isCategoryActive})} onClick={() => setCategoryActive(!isCategoryActive)}>
+      <p className={cn(classes.categoryTitle, {[classes.categoryTitleActive]: activeCategory === category._id})} onClick={changeFlag}>
         {category.category}
       </p>
 
-      <ul className={classes.subCategories}>
+      <ul className={cn(classes.subCategories, {[classes.subCategoriesActive]: activeCategory === category._id})}>
         {items}
       </ul>
     </li>

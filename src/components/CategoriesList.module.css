@@ -1,14 +1,12 @@
 .container {
-  width: 20%;
-  margin: 0 10px;
-  padding-right: 20px;
-  overflow-x: hidden;
+  width: 293px;
+  margin: 65px 31px 0;
   font-family: 'Roboto', sans-serif;
   font-size: 15px;
 }
 
 .categoriesListTitle {
-  margin-bottom: 10px;
+  margin: 10px;
   font-size: inherit;
   color: #121112;
 }

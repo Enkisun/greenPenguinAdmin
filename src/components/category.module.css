@@ -1,8 +1,8 @@
 .categoryTitle {
   margin: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding: 7px 0 10px 16px;
+  width: 291px;
+  word-break: break-all;
+  padding: 7px 16px 10px 16px;
   border-top: solid 1px #979797;
   background-color: rgba(95, 158, 82, 0.12);
   font-size: 15px;
@@ -10,29 +10,36 @@
   cursor: pointer;
 }
 
+/* .categoryTitle:first-letter {
+  text-transform: uppercase;
+} */
+
 .categoryTitleActive {
-  padding: 9px 0 9px 16px;
+  padding: 9px 16px;
   background-color: #5f9e52;
   color: #fff;
 }
 
-.categoryTitleActive + .subCategories {
+.subCategories {
+  display: none;
+  padding: 4px 5px 4px 30px;
+  /* list-style-position: inside; */
+}
+
+.subCategoriesActive {
   display: block;
 }
 
-.subCategories {
-  display: none;
-  padding: 4px 0 4px 17px;
-  overflow-wrap: break-word;
-  list-style-position: inside;
-}
-
 .subCategory {
-  width: fit-content;
-  padding: 5px 0 5px;
+  padding: 5px 0;
   font-size: 15px;
   color: #666;
+  word-break: break-all;
   cursor: pointer;
+}
+
+.subCategory:first-letter {
+  text-transform: uppercase;
 }
 
 .subCategoryActive {

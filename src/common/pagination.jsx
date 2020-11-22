@@ -4,8 +4,6 @@ import cn from "classnames";
 import classes from "./pagination.module.css";
 
 const Pagination = ({ currentPage, pageSize, onPageChanged, portionSize = 3 }) => {
-  
-  let [portionNumber, setPortionNumber] = useState(1);
 
   let totalProductsCount = useSelector(state => state.products.totalProductsCount);
 
@@ -14,48 +12,35 @@ const Pagination = ({ currentPage, pageSize, onPageChanged, portionSize = 3 }) =
 
   for (let i = 1; i <= pagesCount; i++) { pages.push(i); }
 
-  let portionCount = Math.ceil(pagesCount / portionSize);
-
-  let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
-  let rightPortionPageNumber = portionNumber * portionSize;
-  let portionItems = pages.filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber);
   let lastPage = pages[pages.length - 1];
+
+  let leftPortionPageNumber = currentPage - Math.ceil(portionSize / 2 - 1);
+  let rightPortionPageNumber = currentPage + Math.floor(portionSize / 2);
+
+  if (currentPage === 1) rightPortionPageNumber = portionSize;
+  if (currentPage === lastPage) leftPortionPageNumber = lastPage - portionSize + 1;
+
+  let portionItems = pages.filter(page => page >= leftPortionPageNumber && page <= rightPortionPageNumber);
+
+  let portionItem = portionItems.map(page => (
+    <button key={page} className={cn(classes.pageNumber, {[classes.selectedPage]: currentPage === page})} onClick={() => onPageChanged(page)}>
+      {page}
+    </button>
+  ));
 
   if (totalProductsCount <= pageSize) return <></>
 
   return (
     <div className={classes.paginationWrapper}>
-      { portionNumber > 1 && (
-        <>
-          <button className={cn(`${classes.pageNumber}`, {[`${classes.selectedPage}`]: currentPage === 1})} onClick={() => onPageChanged(1)}>1</button>
-          <button className={classes.move} onClick={() => setPortionNumber(portionNumber - 1)}>Previous</button>
-        </>
-      )}
+      <button className={cn(classes.extremePages, {[classes.pageNumber]: currentPage > 1 })} onClick={() => onPageChanged(currentPage - 1)}>&lt; Назад</button>
+      <button className={cn(classes.extremePages, {[classes.pageNumber]: (leftPortionPageNumber - 1) >= 1})} onClick={() => onPageChanged(1)}>1</button>
+      <span className={cn(classes.extremePages, {[classes.activeDots]: (leftPortionPageNumber - 1) > 1})}>..</span>
 
-      { (currentPage !== 1 && (leftPortionPageNumber - currentPage) >= 1) && (
-        <>
-          <button className={cn(`${classes.pageNumber}`, `${classes.selectedPage}`)}>{currentPage}</button>
-          <span className={cn({[`${classes.activeDots}`]: (leftPortionPageNumber - currentPage) > 1})}>..</span>
-        </>
-      )}
+      {portionItem}
 
-      { portionItems.length >= 1 && portionItems.map(p => {
-        return <button key={p} onClick={() => onPageChanged(p)} className={cn(`${classes.pageNumber}`, {[`${classes.selectedPage}`]: currentPage === p})}>{p}</button>
-      })}
-
-      { (currentPage !== lastPage && (currentPage - rightPortionPageNumber) >= 1) && (
-        <>
-          <span className={cn({[`${classes.activeDots}`]: (currentPage - rightPortionPageNumber) > 1})}>..</span>
-          <button className={cn(`${classes.pageNumber}`, `${classes.selectedPage}`)}>{currentPage}</button>
-        </>
-      )}
-
-      { portionCount > portionNumber && (
-        <>
-          { (lastPage - rightPortionPageNumber) > 1 && <button className={classes.move} onClick={() => setPortionNumber(portionNumber + 1)}>Next</button> }
-          <button onClick={() => onPageChanged(lastPage)} className={cn(`${classes.pageNumber}`, {[`${classes.selectedPage}`]: currentPage === lastPage})}>{lastPage}</button>
-        </>
-      )}
+      <span className={cn(classes.extremePages, {[classes.activeDots]: (lastPage - rightPortionPageNumber) > 1})}>..</span>
+      <button className={cn(classes.extremePages, {[classes.pageNumber]: (lastPage - rightPortionPageNumber) >= 1})} onClick={() => onPageChanged(lastPage)}>{lastPage}</button>
+      <button className={cn(classes.extremePages, {[classes.pageNumber]: currentPage < lastPage })} onClick={() => onPageChanged(currentPage + 1)}>Вперед &gt;</button>
     </div>
   )
 }

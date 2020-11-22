@@ -3,7 +3,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-right: 150px;
 }
 
 .tableTd {
@@ -16,21 +15,23 @@
   text-align: center;
   overflow: hidden;
   text-overflow: ellipsis;
+  word-break: break-word;
 }
 
 .productImage {
   width: 100%;
   height: -webkit-fill-available;
-  object-fit: cover;
+  object-fit: contain;
+}
+
+.btnWrapper {
+  width: 100%;
 }
 
 .btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
   border: none;
+  padding: 0 10px;
   background-color: #fff;
-  color: #4742bb;
   font-size: .9rem;
   font-weight: 600;
   cursor: pointer;
@@ -44,9 +45,9 @@
 }
 
 .editBtn {
-  right: -65px;
+  color: #4289bb;
 }
 
 .deleteBtn {
-  right: -150px;
+  color: #bb4253;
 }
