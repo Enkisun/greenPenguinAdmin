@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { setFilters } from '../redux/categoriesReducer';
 import { getProductsTC } from '../redux/productsReducer';
 import cn from 'classnames';
-import classes from './category.module.css';
+import classes from './subcategory.module.css';
 
 const Subcategory = ({ category, subcategory, activeSubCategory, setActiveSubCategory }) => {
 
@@ -10,10 +11,12 @@ const Subcategory = ({ category, subcategory, activeSubCategory, setActiveSubCat
 
   let currentPage = useSelector(state => state.products.currentPage);
   let limit = useSelector(state => state.products.limit);
+  let trademarkFilter = useSelector(state => state.trademarks.trademarkFilter);
 
   const setFilter = useCallback(() => {
     setActiveSubCategory(subcategory);
-    dispatch(getProductsTC(currentPage, limit, category, subcategory))
+    dispatch(setFilters(category, subcategory))
+    dispatch(getProductsTC(currentPage, limit, category, subcategory, trademarkFilter));
   }, []);
 
   return (

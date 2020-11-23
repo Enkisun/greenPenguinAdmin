@@ -19,7 +19,7 @@ const Category = ({ category, activeCategory, setActiveCategory, activeSubCatego
   ));
 
   return (
-    <li className={classes.category}>
+    <li>
       <p className={cn(classes.categoryTitle, {[classes.categoryTitleActive]: activeCategory === category._id})} onClick={changeFlag}>
         {category.category}
       </p>

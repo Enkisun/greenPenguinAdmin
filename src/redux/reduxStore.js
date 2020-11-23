@@ -4,8 +4,10 @@ import thunkMiddleware from 'redux-thunk';
 import categoriesReducer from "./categoriesReducer";
 import modalReducer from "./modalReducer";
 import productsReducer from "./productsReducer";
+import trademarksReducer from "./trademarksReducer";
 
 let reducers = combineReducers({
+  trademarks: trademarksReducer,
   categories: categoriesReducer,
   products: productsReducer,
   modal: modalReducer,

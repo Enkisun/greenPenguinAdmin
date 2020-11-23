@@ -18,14 +18,14 @@ const ProductsList = () => {
   let limit = useSelector(state => state.products.limit);
   let products = useSelector(state => state.products.products);
 
-  const onPageChanged = (newCurrentPage) => {
+  const onPageChanged = newCurrentPage => {
     setLoading(true)
     dispatch(getProductsTC(newCurrentPage, limit))
       .then(() => setLoading(false));
   }
 
   useEffect(() => {
-    onPageChanged(currentPage);
+    onPageChanged(currentPage)
   }, []);
 
   let { request } = useHttp();

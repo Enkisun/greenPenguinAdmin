@@ -1,8 +1,12 @@
+const SET_CATEGORY_FILTER = "SET_CATEGORY_FILTER";
+const SET_SUBCATEGORY_FILTER = "SET_SUBCATEGORY_FILTER";
 const ADD_CATEGORY = "ADD_CATEGORY";
 const DELETE_CATEGORIES = "DELETE_CATEGORIES";
 
 let initialState = {
   categories: [],
+  categoryFilter: '',
+  subCategoryFilter: '',
 }
 
 const categoriesReducer = (state = initialState, action) => {
@@ -16,12 +20,24 @@ const categoriesReducer = (state = initialState, action) => {
       return {
         ...state,
         categories: [],
+      };
+    case SET_CATEGORY_FILTER:
+      return {
+        ...state,
+        categoryFilter: action.category,
+      }
+    case SET_SUBCATEGORY_FILTER:
+      return {
+        ...state,
+        subCategoryFilter: action.subCategory,
       }
     default:
       return state;
   }
 }
 
+const setCategoryFilter = category => ({ type: SET_CATEGORY_FILTER, category });
+const setSubCategoryFilter = subCategory => ({ type: SET_SUBCATEGORY_FILTER, subCategory });
 export const addCategory = category => ({ type: ADD_CATEGORY, category });
 const deleteCategories = () => ({ type: DELETE_CATEGORIES })
 
@@ -30,6 +46,11 @@ const handleErrors = response => {
     throw Error(response.statusText);
   }
   return response;
+}
+
+export const setFilters = (category, subCategory) => async dispatch => {
+  await dispatch(setCategoryFilter(category));
+  dispatch(setSubCategoryFilter(subCategory));
 }
 
 export const getCategoriesTC = () => async dispatch => {

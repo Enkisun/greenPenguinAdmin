@@ -1,17 +1,17 @@
 .container {
   width: 293px;
-  margin: 75px 31px 0;
+  margin: 65px 31px 0;
   font-family: 'Roboto', sans-serif;
   font-size: 15px;
 }
 
-.categoriesListTitle {
+.trademarksListTitle {
   margin: 10px;
   font-size: inherit;
   color: #121112;
 }
 
-.categoriesList {
+.trademarksList {
   margin: 0;
   padding: 0;
   list-style: none;

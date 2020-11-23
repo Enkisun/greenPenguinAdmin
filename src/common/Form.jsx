@@ -32,23 +32,23 @@ const AddForm = ({ handleSubmit }) => {
     <form id="form" onSubmit={handleSubmit} className={cn(classes.formParams, { [classes.formParamsActive]: modal })} ref={createRef}>
       <div className={classes.formInputs}>
         <div className={classes.group}>
-          <label htmlFor="name">Name</label>
-          <Field validate={[requiredField]} name="name" component={Input} />
-        </div>
-
-        <div className={classes.group}>
           <label htmlFor="category">Category</label>
           <Field validate={[requiredField]} name="category" component={Input} />
         </div>
 
         <div className={classes.group}>
-          <label htmlFor="subCategory">subCategory</label>
+          <label htmlFor="subCategory">Subcategory</label>
           <Field validate={[requiredField]} name="subCategory" component={Input} />
         </div>
 
         <div className={classes.group}>
           <label htmlFor="trademark">Trademark</label>
           <Field validate={[requiredField]} name="trademark" component={Input} />
+        </div>
+
+        <div className={classes.group}>
+          <label htmlFor="name">Name</label>
+          <Field validate={[requiredField]} name="name" component={Input} />
         </div>
 
         <div className={classes.group}>

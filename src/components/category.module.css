@@ -10,10 +10,6 @@
   cursor: pointer;
 }
 
-/* .categoryTitle:first-letter {
-  text-transform: uppercase;
-} */
-
 .categoryTitleActive {
   padding: 9px 16px;
   background-color: #5f9e52;
@@ -23,25 +19,8 @@
 .subCategories {
   display: none;
   padding: 4px 5px 4px 30px;
-  /* list-style-position: inside; */
 }
 
 .subCategoriesActive {
   display: block;
-}
-
-.subCategory {
-  padding: 5px 0;
-  font-size: 15px;
-  color: #666;
-  word-break: break-all;
-  cursor: pointer;
-}
-
-.subCategory:first-letter {
-  text-transform: uppercase;
-}
-
-.subCategoryActive {
-  color: #5f9e52;
 }

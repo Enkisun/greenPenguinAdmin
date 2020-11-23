@@ -19,11 +19,11 @@ const CategoriesList = () => {
 
   const items = categories && categories.map(category => (
     <Category key={category._id}
-     category={category}
-     activeCategory={activeCategory}
-     setActiveCategory={setActiveCategory}
-     activeSubCategory={activeSubCategory}
-     setActiveSubCategory={setActiveSubCategory}
+      category={category}
+      activeCategory={activeCategory}
+      setActiveCategory={setActiveCategory}
+      activeSubCategory={activeSubCategory}
+      setActiveSubCategory={setActiveSubCategory}
     />
   ));
 

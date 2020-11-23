@@ -1,0 +1,11 @@
+.subCategory {
+  padding: 5px 0;
+  font-size: 15px;
+  color: #666;
+  word-break: break-all;
+  cursor: pointer;
+}
+
+.subCategoryActive {
+  color: #5f9e52;
+}
