@@ -23,12 +23,13 @@
 
 .formWrapper {
   display: flex;
-  align-items: center;
   justify-content: space-between;
 }
 
 .formInputs {
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   margin: 0 40px 20px;
 }
 
@@ -36,6 +37,11 @@
   position: relative;
   display: block;
   height: 100%;
+  margin-bottom: 20px;
+}
+
+.submit {
+  position: relative;
   margin-bottom: 20px;
 }
 

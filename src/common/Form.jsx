@@ -100,7 +100,7 @@ const AddForm = ({ handleSubmit }) => {
             <Field name="description" component={Textarea} />
           </div>
 
-          <div className={`${classes.group} ${classes.image}`}>
+          <div className={`${classes.submit} ${classes.image}`}>
             <input type="file" id="imageSrc" name="imageSrc" accept="image/*"  />
             <button className={classes.submitButton} type='submit'>Save</button>
           </div>
