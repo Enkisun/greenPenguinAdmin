@@ -10,7 +10,7 @@ const Category = ({ category, activeCategory, setActiveCategory, activeSubCatego
   }, [activeCategory, category]);
   
   const items = category.subCategory.map(subcategory => (
-    <Subcategory key={subcategory._id}
+    <Subcategory key={subcategory}
       category={category.category}
       subcategory={subcategory}
       activeSubCategory={activeSubCategory}

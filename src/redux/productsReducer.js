@@ -39,7 +39,7 @@ const productsReducer = (state = initialState, action) => {
 
 export const addProduct = product => ({ type: ADD_PRODUCT, product });
 const deleteProducts = () => ({ type: DELETE_PRODUCTS })
-const setCurrentPage = currentPage => ({ type: SET_CURRENT_PAGE, currentPage });
+export const setCurrentPage = currentPage => ({ type: SET_CURRENT_PAGE, currentPage });
 const setTotalProductsCount = totalProductsCount => ({ type: SET_TOTAL_PRODUCTS_COUNT, totalProductsCount });
 
 const handleErrors = response => {

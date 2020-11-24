@@ -14,7 +14,7 @@ const TrademarksList = () => {
   }, []);
 
   const items = trademarks && trademarks.map(trademark => (
-    <Trademark key={trademark._id} trademark={trademark} />
+    <Trademark key={trademark._id} trademark={trademark.trademark} />
   ));
 
   return (

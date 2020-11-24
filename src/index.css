@@ -18,6 +18,12 @@ a {
   border: none
 }
 
+select {
+  -moz-appearance:none;
+  -webkit-appearance:none;
+  appearance:none;
+}
+
 :focus {
   outline-style: none;
   outline-width: 0px !important;

@@ -1,4 +1,5 @@
-input, textarea {
+.inputWrapper {
+  display: block;
   width: 350px;
   height: 100%;
   padding: 28px 15px 10px;
@@ -10,12 +11,35 @@ input, textarea {
   letter-spacing: 1px;
 }
 
-textarea {
+.formError {
+  border: 1px solid red;
+}
+
+.textarea {
   resize: none;
 }
 
-.formError {
-  border: 1px solid red
+.select {
+  cursor: pointer;
+}
+
+.disable {
+  display: none;
+}
+
+.plusIcon {
+  position: absolute;
+  top: 40%;
+  right: -25px;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  transition: transform .6s;
+}
+
+.close {
+  transition: transform .6s;
+  transform: rotate(45deg);
 }
 
 .spanError {

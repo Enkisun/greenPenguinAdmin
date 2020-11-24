@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProductsTC } from '../redux/productsReducer';
+import { getProductsTC, setCurrentPage } from '../redux/productsReducer';
 import { useHttp } from '../hooks/http.hook';
 import Pagination from '../common/Pagination';
 import Preloader from '../common/Preloader';
@@ -17,16 +17,19 @@ const ProductsList = () => {
   let currentPage = useSelector(state => state.products.currentPage);
   let limit = useSelector(state => state.products.limit);
   let products = useSelector(state => state.products.products);
+  let categoryFilter = useSelector(state => state.categories.categoryFilter);
+  let subCategoryFilter = useSelector(state => state.categories.subCategoryFilter);
+  let trademarkFilter = useSelector(state => state.trademarks.trademarkFilter);
 
   const onPageChanged = newCurrentPage => {
-    setLoading(true)
-    dispatch(getProductsTC(newCurrentPage, limit))
-      .then(() => setLoading(false));
+    dispatch(setCurrentPage(newCurrentPage, limit));
   }
 
   useEffect(() => {
-    onPageChanged(currentPage)
-  }, []);
+    setLoading(true)
+    dispatch(getProductsTC(currentPage, limit, categoryFilter, subCategoryFilter, trademarkFilter))
+      .then(() => setLoading(false));
+  }, [currentPage, trademarkFilter]);
 
   let { request } = useHttp();
 

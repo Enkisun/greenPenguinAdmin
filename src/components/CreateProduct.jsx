@@ -1,16 +1,13 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { CustomReduxForm } from '../common/Form';
-import { useHttp } from '../hooks/http.hook';
 import { setModal } from '../redux/modalReducer';
 import { getProductsTC } from '../redux/productsReducer';
 import classes from './createProduct.module.css';
 
-const CreateProduct = () => {
+const CreateProduct = ({ request }) => {
 
   let dispatch = useDispatch();
-
-  let { request } = useHttp();
 
   const setModalActive = useCallback(() => dispatch(setModal(true)), []);
 
@@ -21,7 +18,7 @@ const CreateProduct = () => {
       formData.append("image", imageFile);
       formData.append("name", formdata.name);
       formData.append("category", formdata.category);
-      formData.append("subCategory", formdata.subCategory);
+      formdata.subCategory && formData.append("subCategory", formdata.subCategory);
       formData.append("trademark", formdata.trademark);
       formData.append("volume", formdata.volume);
       formData.append("price", formdata.price);
