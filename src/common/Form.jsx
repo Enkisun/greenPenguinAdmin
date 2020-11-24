@@ -51,8 +51,8 @@ const AddForm = ({ handleSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit} className={cn(classes.formParams, { [classes.formParamsActive]: modal })} ref={createRef}>
-      <div className={classes.title}>
-        <h2>Create Product</h2>
+      <div>
+        <h2 className={classes.title}>Create Product</h2>
       </div>
 
       <div className={classes.formWrapper}>

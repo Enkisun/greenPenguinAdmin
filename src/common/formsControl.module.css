@@ -3,7 +3,7 @@
   width: 350px;
   height: 100%;
   padding: 28px 15px 10px;
-  border: 1px solid #4742bb;
+  border: 1px solid #5f9e52;
   border-radius: 5px;
   font-family: 'Exo', sans-serif;
   font-size: 16px;
@@ -16,6 +16,7 @@
 }
 
 .textarea {
+  height: 343px;
   resize: none;
 }
 
