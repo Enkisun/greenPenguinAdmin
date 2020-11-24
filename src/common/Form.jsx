@@ -95,7 +95,7 @@ const AddForm = ({ handleSubmit }) => {
         </div>
 
         <div className={classes.formInputs}>
-          <div className={classes.group}>
+          <div className={`${classes.group} ${classes.textarea}`}>
             <label htmlFor="description" className={classes.label}>Description</label>
             <Field name="description" component={Textarea} />
           </div>

@@ -16,6 +16,7 @@
 }
 
 .textarea {
+  padding: 15px;
   resize: none;
 }
 
@@ -27,19 +28,17 @@
   display: none;
 }
 
-.plusIcon {
+.icon {
   position: absolute;
   top: 40%;
   right: -25px;
   width: 15px;
   height: 15px;
   cursor: pointer;
-  transition: transform .6s;
 }
 
-.close {
-  transition: transform .6s;
-  transform: rotate(45deg);
+.checkIcon {
+  fill: #5f9e52;
 }
 
 .spanError {
