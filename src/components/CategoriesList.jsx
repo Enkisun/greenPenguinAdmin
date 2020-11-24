@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategoriesTC } from '../redux/categoriesReducer';
 import Category from './Category';
 import classes from './CategoriesList.module.css';
 
 const CategoriesList = () => {
-
-  const [activeCategory, setActiveCategory] = useState(null);
-  const [activeSubCategory, setActiveSubCategory] = useState('');
 
   const dispatch = useDispatch();
 
@@ -18,13 +15,7 @@ const CategoriesList = () => {
   let categories = useSelector(state => state.categories.categories);
 
   const items = categories && categories.map(category => (
-    <Category key={category._id}
-      category={category}
-      activeCategory={activeCategory}
-      setActiveCategory={setActiveCategory}
-      activeSubCategory={activeSubCategory}
-      setActiveSubCategory={setActiveSubCategory}
-    />
+    <Category key={category._id} category={category} />
   ));
 
   return (

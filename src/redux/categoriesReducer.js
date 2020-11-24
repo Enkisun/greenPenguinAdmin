@@ -50,7 +50,7 @@ const handleErrors = response => {
 
 export const setFilters = (category, subCategory) => async dispatch => {
   await dispatch(setCategoryFilter(category));
-  dispatch(setSubCategoryFilter(subCategory));
+  subCategory && dispatch(setSubCategoryFilter(subCategory));
 }
 
 export const getCategoriesTC = () => async dispatch => {
