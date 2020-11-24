@@ -15,6 +15,7 @@ const AddForm = ({ handleSubmit }) => {
   let trademarks = useSelector(state => state.trademarks.trademarks);
 
   let [selectedCategory, setSelectedCategory] = useState('');
+  let [selectedValue, setSelectedValue] = useState('');
 
   let createRef = useRef();
 
@@ -31,10 +32,6 @@ const AddForm = ({ handleSubmit }) => {
 
     onClickOutside();
   }, [modal]);
-
-  const changeCategory = e => {
-    e.target.value === 'Select Category' ? setSelectedCategory('') : setSelectedCategory(e.target.value);
-  }
 
   let categoryOption = categories && categories.map(category => (
     <option value={category.category} key={category._id}>{category.category}</option>
@@ -62,16 +59,14 @@ const AddForm = ({ handleSubmit }) => {
         <div className={classes.formInputs}>
           <div className={classes.group}>
           <label htmlFor="category" className={classes.label}>Category</label>
-            <Field validate={[requiredField]} name="category" component={Select} value={selectedCategory} onChange={e => changeCategory(e)}>
-              <option></option>
+            <Field validate={[requiredField]} setSelectedCategory={setSelectedCategory} name="category" component={Select} value={selectedCategory} onChange={e => setSelectedCategory(e.target.value)}>
               {categoryOption}
             </Field>
           </div>
 
           <div className={cn(classes.group, {[classes.disabled]: !selectedCategory})}>
             <label htmlFor="subCategory" className={classes.label}>Subcategory</label>
-            <Field name="subCategory" component={Select}>
-              <option></option>
+            <Field name="subCategory" setSelectedValue={setSelectedValue} component={Select} value={selectedValue} onChange={e => setSelectedValue(e.target.value)}>
               {subCategoryOption}
             </Field>
           </div>
@@ -79,7 +74,6 @@ const AddForm = ({ handleSubmit }) => {
           <div className={classes.group}>
             <label htmlFor="trademark" className={classes.label}>Trademark</label>
             <Field validate={[requiredField]} name="trademark" component={Select}>
-              <option></option>
               {trademarkOptions}
             </Field>
           </div>
@@ -101,10 +95,10 @@ const AddForm = ({ handleSubmit }) => {
         </div>
 
         <div className={classes.formInputs}>
-          {/* <div className={classes.group}>
+          <div className={classes.group}>
             <label htmlFor="description" className={classes.label}>Description</label>
-            <Field validate={[requiredField]} name="description" component={Textarea} />
-          </div> */}
+            <Field name="description" component={Textarea} />
+          </div>
 
           <div className={`${classes.group} ${classes.image}`}>
             <input type="file" id="imageSrc" name="imageSrc" accept="image/*"  />

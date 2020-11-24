@@ -26,19 +26,25 @@ export const Textarea = field => {
 export const Select = field => {
   let [fieldType, setFieldType] = useState(false);
 
+  const changeType = () => {
+    setFieldType(!fieldType)
+    if (field.input.name === 'category') field.setSelectedCategory('');
+    if (field.input.name === 'subCategory') field.setSelectedValue('');
+  }
+
   const hasError = field.meta.touched && field.meta.error;
   return (
     <>
-      <select className={cn(classes.inputWrapper, classes.select, {[classes.formError]: hasError, [classes.disable]: fieldType})} {...field.input}>
-        {field.children}
-      </select>
-
       <label htmlFor={field.input.label}>
-        <input className={cn(classes.inputWrapper, {[classes.formError]: hasError, [classes.disable]: !fieldType})} {...field.input} />
-        <PlusIcon className={cn(classes.plusIcon, {[classes.close]: fieldType})} onClick={() => setFieldType(!fieldType)} />
-      </label>
+        <select className={cn(classes.inputWrapper, classes.select, {[classes.formError]: hasError, [classes.disable]: fieldType})} {...field.input}>
+          <option></option>
+          {field.children}
+        </select>
 
-      { hasError && <span className={classes.spanError}>{field.meta.error}</span> }
+        <input className={cn(classes.inputWrapper, {[classes.formError]: hasError, [classes.disable]: !fieldType})} {...field.input} />
+        <PlusIcon className={cn(classes.plusIcon, {[classes.close]: fieldType})} onClick={() => changeType()} />
+        { hasError && <span className={classes.spanError}>{field.meta.error}</span> }
+      </label>
     </>
   );
 };

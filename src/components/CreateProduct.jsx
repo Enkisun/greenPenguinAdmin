@@ -22,6 +22,7 @@ const CreateProduct = ({ request }) => {
       formData.append("trademark", formdata.trademark);
       formData.append("volume", formdata.volume);
       formData.append("price", formdata.price);
+      formData.append("description", formdata.price);
       await request('api/trademarks', 'POST', {trademark: formdata.trademark});
       await request('api/categories', 'POST', {category: formdata.category, subCategory: formdata.subCategory});
       await fetch('api/products', { method: 'POST', body: formData });
