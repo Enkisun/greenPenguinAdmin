@@ -25,26 +25,27 @@ export const Textarea = field => {
 
 export const Select = field => {
   let [fieldType, setFieldType] = useState(false);
+  let [localValue, setLocalValue] = useState('');
 
   const changeType = () => {
+    if (fieldType && field.input.name === 'category') field.setSelectedCategory(localValue);
     setFieldType(!fieldType)
-    if (field.input.name === 'category') field.setSelectedCategory('');
-    if (field.input.name === 'subCategory') field.setSelectedValue('');
   }
 
   const hasError = field.meta.touched && field.meta.error;
   return (
     <>
-      <label htmlFor={field.input.label}>
-        <select className={cn(classes.inputWrapper, classes.select, {[classes.formError]: hasError, [classes.disable]: fieldType})} {...field.input}>
-          <option></option>
-          {field.children}
-        </select>
+      <select className={cn(classes.inputWrapper, classes.select, {[classes.formError]: hasError, [classes.disable]: fieldType})} {...field.input}>
+        <option value={localValue}>{localValue}</option>
+        {field.children}
+      </select>
 
-        <input className={cn(classes.inputWrapper, {[classes.formError]: hasError, [classes.disable]: !fieldType})} {...field.input} />
+      <label htmlFor={field.input.label}>
+        <input className={cn(classes.inputWrapper, {[classes.formError]: hasError, [classes.disable]: !fieldType})} {...field.input} value={localValue} onChange={e => setLocalValue(e.target.value)} />
         <PlusIcon className={cn(classes.plusIcon, {[classes.close]: fieldType})} onClick={() => changeType()} />
-        { hasError && <span className={classes.spanError}>{field.meta.error}</span> }
       </label>
+
+      { hasError && <span className={classes.spanError}>{field.meta.error}</span> }
     </>
   );
 };
