@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addTrademarkFilter, removeTrademarkFilter } from '../redux/trademarksReducer';
+import { addTrademarkFilter, removeTrademarkFilter } from '../../redux/trademarksReducer';
 import cn from 'classnames';
 import classes from './trademark.module.css';
-import {ReactComponent as CheckIcon} from '../assets/check.svg';
+import {ReactComponent as CheckIcon} from '../../assets/check.svg';
 
 const trademark = ({ trademark }) => {
 

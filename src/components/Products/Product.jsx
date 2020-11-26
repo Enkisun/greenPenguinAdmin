@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getProductsTC } from '../redux/productsReducer';
+import { getProductsTC } from '../../redux/productsReducer';
+import CreateProduct from './CreateProduct';
 import classes from "./product.module.css";
-import defaultImage from "../assets/defaultImage.svg";
+import defaultImage from "../../assets/defaultImage.svg";
 
 const Product = ({ product, request, dispatch }) => {
+
+  let [modal, setModal] = useState(false);
 
   let currentPage = useSelector(state => state.products.currentPage);
   let limit = useSelector(state => state.products.limit);
@@ -29,7 +32,7 @@ const Product = ({ product, request, dispatch }) => {
       <td className={classes.tableTd}>{product.price}</td>
       <td className={classes.tableTd}>
         <div className={classes.btnWrapper}>
-          <button className={`${classes.btn} ${classes.editBtn}`} onClick={() => deleteHandler(product._id)}>Edit</button>
+          <CreateProduct request={request} modal={modal} setModal={setModal} product={product} />
           <button className={`${classes.btn} ${classes.deleteBtn}`} onClick={() => deleteHandler(product._id)}>Delete</button>
         </div>
       </td>

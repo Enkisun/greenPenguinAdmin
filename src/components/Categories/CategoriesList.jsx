@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCategoriesTC } from '../redux/categoriesReducer';
+import { getCategoriesTC } from '../../redux/categoriesReducer';
 import Category from './Category';
 import classes from './CategoriesList.module.css';
 

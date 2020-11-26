@@ -1,5 +1,5 @@
 export const requiredField = value => {
-  if (value && value !== 'Select Category') return undefined;
+  if (value) return undefined;
   return "Field is required";
 }
 

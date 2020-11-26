@@ -1,24 +1,29 @@
 import React, { useState } from "react";
 import cn from 'classnames';
 import classes from './formsControl.module.css';
-import {ReactComponent as PlusIcon} from '../assets/plus.svg';
-import {ReactComponent as CheckIcon} from '../assets/check.svg';
+import {ReactComponent as PlusIcon} from '../../assets/plus.svg';
+import {ReactComponent as CheckIcon} from '../../assets/check.svg';
 
 export const Input = field => {
+  let [value, setValue] = useState(field.defaultValue);
   const hasError = field.meta.touched && field.meta.error;
+
   return (
     <>
-      <input className={cn(classes.inputWrapper, {[classes.formError]: hasError})} {...field.input} type={field.type || "text"} />
+      <input className={cn(classes.inputWrapper, {[classes.formError]: hasError})} {...field.input} type={field.type || "text"}
+       value={value} onChange={e => setValue(e.target.value)} />
       { hasError && <span className={classes.spanError}>{field.meta.error}</span> }
     </>
   );
 };
 
 export const Textarea = field => {
+  let [value, setValue] = useState(field.defaultValue);
   const hasError = field.meta.touched && field.meta.error;
   return (
     <>
-      <textarea className={cn(classes.inputWrapper, classes.textarea, {[classes.formError]: hasError})} {...field.input} />
+      <textarea className={cn(classes.inputWrapper, classes.textarea, {[classes.formError]: hasError})} {...field.input}
+       value={value} onChange={e => setValue(e.target.value)} />
       { hasError && <span className={classes.spanError}>{field.meta.error}</span> }
     </>
   );
@@ -26,7 +31,7 @@ export const Textarea = field => {
 
 export const Select = field => {
   let [fieldType, setFieldType] = useState(false);
-  let [localValue, setLocalValue] = useState('');
+  let [localValue, setLocalValue] = useState(field.defaultValue ? field.defaultValue : '');
 
   const changeType = () => {
     if (fieldType && field.input.name === 'category') field.setSelectedCategory(localValue);
@@ -34,6 +39,7 @@ export const Select = field => {
   }
 
   const hasError = field.meta.touched && field.meta.error;
+  console.log(field.meta.touched, field.meta.error)
   return (
     <>
       <select className={cn(classes.inputWrapper, classes.select, {[classes.formError]: hasError, [classes.disable]: fieldType})} {...field.input}>

@@ -46,11 +46,8 @@
 
 .submit {
   position: relative;
+  display: flex;
   margin-bottom: 20px;
-}
-
-.image {
-  width: 100%;
 }
 
 .disabled {

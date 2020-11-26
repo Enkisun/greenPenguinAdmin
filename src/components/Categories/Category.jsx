@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilters } from '../redux/categoriesReducer';
-import { getProductsTC } from '../redux/productsReducer';
+import { setFilters } from '../../redux/categoriesReducer';
+import { getProductsTC } from '../../redux/productsReducer';
 import cn from 'classnames';
 import classes from './category.module.css';
 

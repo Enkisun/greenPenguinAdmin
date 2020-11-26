@@ -73,8 +73,6 @@ export const getProductsTC = (currentPage, limit, category = '', subCategory = '
   await dispatch(deleteProducts());
   await dispatch(setCurrentPage(currentPage));
 
-  // if (trademark)
-
   const response = await fetch(`/api/products?page=${currentPage}&limit=${limit}&category=${category}&subCategory=${subCategory}&trademark=${trademark}`);
   const result = await handleErrors(response);
   const json = await result.json();

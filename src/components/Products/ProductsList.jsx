@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProductsTC, setCurrentPage } from '../redux/productsReducer';
-import { useHttp } from '../hooks/http.hook';
-import Pagination from '../common/Pagination';
-import Preloader from '../common/Preloader';
+import { getProductsTC, setCurrentPage } from '../../redux/productsReducer';
+import { setCreateModal } from '../../redux/modalsReducer';
+import { useHttp } from '../../hooks/http.hook';
+import Pagination from '../../common/Pagination';
+import Preloader from '../../common/Preloader';
 import CreateProduct from './CreateProduct';
 import Product from './Product';
 import classes from "./productsList.module.css";
@@ -20,6 +21,7 @@ const ProductsList = () => {
   let categoryFilter = useSelector(state => state.categories.categoryFilter);
   let subCategoryFilter = useSelector(state => state.categories.subCategoryFilter);
   let trademarkFilter = useSelector(state => state.trademarks.trademarkFilter);
+  let createModal = useSelector(state => state.modals.createModal);
 
   const onPageChanged = newCurrentPage => {
     dispatch(setCurrentPage(newCurrentPage, limit));
@@ -41,7 +43,7 @@ const ProductsList = () => {
     <div className={classes.container}>
       <header className={classes.header}>
         <h1>Products List</h1>
-        <CreateProduct request={request} />
+        <CreateProduct request={request} modal={createModal} setModal={setCreateModal} />
       </header>
 
       <table className={classes.table}>

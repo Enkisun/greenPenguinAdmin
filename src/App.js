@@ -1,8 +1,8 @@
 import React from 'react';
-import CategoriesList from './components/CategoriesList';
-import TrademarksList from './components/TrademarksList';
-import ProductsList from './components/ProductsList';
 import classes from './app.module.css';
+import CategoriesList from './components/Categories/CategoriesList';
+import ProductsList from './components/Products/ProductsList';
+import TrademarksList from './components/Trademarks/TrademarksList';
 
 const App = () => {
   return (

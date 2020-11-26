@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTrademarksTC } from '../redux/trademarksReducer';
+import { getTrademarksTC } from '../../redux/trademarksReducer';
 import Trademark from './Trademark';
 import classes from './TrademarksList.module.css';
 

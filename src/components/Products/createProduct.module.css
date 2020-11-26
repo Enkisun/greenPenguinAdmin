@@ -13,3 +13,7 @@
 .createButton:hover {
   font-size: 1rem;
 }
+
+.edit {
+  color: #4289bb;
+}
