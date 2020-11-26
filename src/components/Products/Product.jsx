@@ -22,7 +22,7 @@ const Product = ({ product, request, dispatch }) => {
   return (
     <tr className={classes.tableTr}>
       <td className={classes.tableTd}>
-        <img className={classes.productImage} src={product.image ? product.image : defaultImage} alt="productImage" />
+        <img className={classes.productImage} src={product.image ? product.image.src : defaultImage} alt="productImage" />
       </td>
       <td className={classes.tableTd}>{product.category}</td>
       <td className={classes.tableTd}>{product.subCategory}</td>

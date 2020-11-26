@@ -16,6 +16,7 @@ const AddForm = ({ handleSubmit, modal, setModal, product }) => {
   let [selectedValue, setSelectedValue] = useState('');
 
   let productFormRef = useRef();
+  let selectedFileNameRef = useRef();
 
   useEffect(() => {
     const onClickOutside = () => {
@@ -47,6 +48,12 @@ const AddForm = ({ handleSubmit, modal, setModal, product }) => {
   let categoryChildren = product ? categoryOption.filter(a => { if (a.props.value !== product.category) return a }) : categoryOption;
   let subCategoryChildren = product ? subCategoryOption.filter(a => { if (a.props.value !== product.subCategory) return a }) : subCategoryOption;
   let trademarksChildren = product ? trademarkOption.filter(a => { if (a.props.value !== product.trademark) return a }) : trademarkOption;
+
+const onChange = () => {
+  let id = document.getElementById("imageSrc");
+  let name = id.files[0].name;
+  selectedFileNameRef.current.innerHTML = name;
+}
 
   return (
     <form onSubmit={handleSubmit} initialValues={product && {...product}} className={cn(classes.formParams, { [classes.formParamsActive]: modal })} ref={productFormRef}>
@@ -102,7 +109,12 @@ const AddForm = ({ handleSubmit, modal, setModal, product }) => {
           </div>
 
           <div className={classes.submit}>
-            <input type="file" id="imageSrc" name="imageSrc" accept="image/*" />
+            <label htmlFor="imageSrc" className={classes.imageLabel}>
+              <div className={classes.fileButton}>Choose File</div>
+              <input type="file" id="imageSrc" name="imageSrc" accept="image/*" hidden onChange={onChange} />
+              <span ref={selectedFileNameRef} className={classes.imageName}>{product ? product.image.name : 'Файл не выбран'}</span>
+            </label>
+            
             <button className={classes.submitButton}>Save</button>
           </div>
         </div>

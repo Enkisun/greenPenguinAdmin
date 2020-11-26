@@ -56,18 +56,18 @@ const arrayBufferToBase64 = buffer => {
   return window.btoa(binary);
 };
 
-export const addProductTC = newProduct => async dispatch => {
-  const result = await handleErrors(newProduct);
-  const json = await result.json();
+// export const addProductTC = newProduct => async dispatch => {
+//   const result = await handleErrors(newProduct);
+//   const json = await result.json();
 
-  if (json) {
-    const base64Flag = `data:${json.image.contentType};base64,`;
-    const imageStr = arrayBufferToBase64(json.image.data.data);
-    json.image = base64Flag + imageStr;
-  }
+//   if (json) {
+//     const base64Flag = `data:${json.image.contentType};base64,`;
+//     const imageStr = arrayBufferToBase64(json.image.data.data);
+//     json.image = base64Flag + imageStr;
+//   }
 
-  dispatch(addProduct(json));
-}
+//   dispatch(addProduct(json));
+// }
 
 export const getProductsTC = (currentPage, limit, category = '', subCategory = '', trademark = '') => async dispatch => {
   await dispatch(deleteProducts());
@@ -84,7 +84,7 @@ export const getProductsTC = (currentPage, limit, category = '', subCategory = '
       if (product.image) {
         const base64Flag = `data:${product.image.contentType};base64,`;
         const imageStr = arrayBufferToBase64(product.image.data.data);
-        product.image = base64Flag + imageStr;
+        product.image = {src: base64Flag + imageStr, name: product.image.name};
       }
 
       await dispatch(addProduct(product));

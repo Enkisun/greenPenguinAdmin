@@ -47,6 +47,7 @@
 .submit {
   position: relative;
   display: flex;
+  align-items: center;
   margin-bottom: 20px;
 }
 
@@ -60,6 +61,32 @@
   top: 8px;
   font-size: .7rem;
   color: #888da8;
+}
+
+.imageLabel {
+  display: flex;
+  align-items: center;
+  word-break: normal;
+}
+
+.fileButton {
+  background-color: #768d87;
+  border-radius: 5px;
+  border: 2px solid #566963;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 5px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.imageName {
+  overflow: hidden;
+  width: 180px;
+  text-overflow: ellipsis;
+  text-align: left;
+  cursor: pointer;
 }
 
 .submitButton {
