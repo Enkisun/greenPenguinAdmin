@@ -38,7 +38,7 @@ const AddForm = ({ handleSubmit, modal, setModal, product }) => {
   let category = categories && categories.filter(category => {
     if (category.category === (product ? product.category : selectedCategory)) return category 
   });
-  let subCategoryOption = category[0] && category[0].subCategory.map(subCategory => 
+  let subCategoryOption = (category[0] && category[0].subCategory) && category[0].subCategory.map(subCategory => 
     <option value={subCategory} key={subCategory}>{subCategory}</option>
   );
   let trademarkOption = trademarks && trademarks.map(trademark =>
@@ -46,14 +46,16 @@ const AddForm = ({ handleSubmit, modal, setModal, product }) => {
   );
 
   let categoryChildren = product ? categoryOption.filter(a => { if (a.props.value !== product.category) return a }) : categoryOption;
-  let subCategoryChildren = product ? subCategoryOption.filter(a => { if (a.props.value !== product.subCategory) return a }) : subCategoryOption;
+  let subCategoryChildren = (product && subCategoryOption) ? subCategoryOption.filter(a => { if (a.props.value !== product.subCategory) return a }) : subCategoryOption;
   let trademarksChildren = product ? trademarkOption.filter(a => { if (a.props.value !== product.trademark) return a }) : trademarkOption;
 
-const onChange = () => {
-  let id = document.getElementById("imageSrc");
-  let name = id.files[0].name;
-  selectedFileNameRef.current.innerHTML = name;
-}
+  const onChange = () => {
+    let id = document.getElementById("imageSrc");
+    let name = id.files[0].name;
+    selectedFileNameRef.current.innerHTML = name;
+  }
+
+  let imageText = product ? (product.image ? product.image.name : 'Файл не выбран') : 'Файл не выбран'
 
   return (
     <form onSubmit={handleSubmit} initialValues={product && {...product}} className={cn(classes.formParams, { [classes.formParamsActive]: modal })} ref={productFormRef}>
@@ -112,7 +114,7 @@ const onChange = () => {
             <label htmlFor="imageSrc" className={classes.imageLabel}>
               <div className={classes.fileButton}>Choose File</div>
               <input type="file" id="imageSrc" name="imageSrc" accept="image/*" hidden onChange={onChange} />
-              <span ref={selectedFileNameRef} className={classes.imageName}>{product ? product.image.name : 'Файл не выбран'}</span>
+              <span ref={selectedFileNameRef} className={classes.imageName}>{imageText}</span>
             </label>
             
             <button className={classes.submitButton}>Save</button>

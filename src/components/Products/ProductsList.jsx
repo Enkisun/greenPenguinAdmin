@@ -13,8 +13,9 @@ const ProductsList = () => {
 
   let [loading, setLoading] = useState(false);
 
-  const dispatch = useDispatch();
+  let { request } = useHttp();
 
+  const dispatch = useDispatch();
   let currentPage = useSelector(state => state.products.currentPage);
   let limit = useSelector(state => state.products.limit);
   let products = useSelector(state => state.products.products);
@@ -23,20 +24,16 @@ const ProductsList = () => {
   let trademarkFilter = useSelector(state => state.trademarks.trademarkFilter);
   let createModal = useSelector(state => state.modals.createModal);
 
-  const onPageChanged = newCurrentPage => {
-    dispatch(setCurrentPage(newCurrentPage, limit));
-  }
-
   useEffect(() => {
     setLoading(true)
     dispatch(getProductsTC(currentPage, limit, categoryFilter, subCategoryFilter, trademarkFilter))
       .then(() => setLoading(false));
   }, [currentPage, trademarkFilter]);
 
-  let { request } = useHttp();
+  const onPageChanged = newCurrentPage => dispatch(setCurrentPage(newCurrentPage, limit));
 
   const items = products && products.map(product => (
-    <Product key={product._id} product={product} request={request} dispatch={dispatch} />
+    <Product key={product._id} product={product} productsCount={products.length} request={request} dispatch={dispatch} />
   ));
 
   return (
@@ -50,10 +47,10 @@ const ProductsList = () => {
         <tbody>
           <tr className={classes.tableTr}>
             <th className={classes.tableTh}>Image</th>
+            <th className={classes.tableTh}>Name</th>
             <th className={classes.tableTh}>Category</th>
             <th className={classes.tableTh}>Subcategory</th>
             <th className={classes.tableTh}>Trademark</th>
-            <th className={classes.tableTh}>Name</th>
             <th className={classes.tableTh}>Volume</th>
             <th className={classes.tableTh}>Price</th>
             <th className={classes.tableTh}>Actions</th>

@@ -11,13 +11,13 @@ const trademark = ({ trademark }) => {
 
   const dispatch = useDispatch();
 
-  const changeFlag = useCallback(() => {
+  const setFilter = useCallback(() => {
     setActiveTrademark(!activeTrademark);
     activeTrademark ? dispatch(removeTrademarkFilter(trademark)) : dispatch(addTrademarkFilter(trademark));
   }, [activeTrademark]);
 
   return (
-    <li className={cn(classes.trademark, {[classes.trademarkActive]: activeTrademark})} onClick={changeFlag}>
+    <li className={cn(classes.trademark, {[classes.trademarkActive]: activeTrademark})} onClick={setFilter}>
       <CheckIcon className={cn(classes.check, {[classes.checkActive]: activeTrademark})} />
       <p className={classes.trademarkTitle}>{trademark}</p>
     </li>

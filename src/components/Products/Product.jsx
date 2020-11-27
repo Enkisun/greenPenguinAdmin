@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getProductsTC } from '../../redux/productsReducer';
+import { getProductsTC, setCurrentPage } from '../../redux/productsReducer';
 import CreateProduct from './CreateProduct';
 import classes from "./product.module.css";
 import defaultImage from "../../assets/defaultImage.svg";
 
-const Product = ({ product, request, dispatch }) => {
+const Product = ({ product, productsCount, request, dispatch }) => {
 
   let [modal, setModal] = useState(false);
 
@@ -15,7 +15,8 @@ const Product = ({ product, request, dispatch }) => {
   const deleteHandler = async (id) => {
     try {
       await request('/api/products', 'DELETE', { id });
-      dispatch(getProductsTC(currentPage, limit));
+      dispatch(setCurrentPage(currentPage === 1 ? 1 : (productsCount > 1 ? currentPage : currentPage - 1)));
+      (productsCount > 1 || (currentPage === 1 && productsCount === 1)) && dispatch(getProductsTC(currentPage, limit));
     } catch (e) {}
   }
 
@@ -24,10 +25,10 @@ const Product = ({ product, request, dispatch }) => {
       <td className={classes.tableTd}>
         <img className={classes.productImage} src={product.image ? product.image.src : defaultImage} alt="productImage" />
       </td>
-      <td className={classes.tableTd}>{product.category}</td>
-      <td className={classes.tableTd}>{product.subCategory}</td>
-      <td className={classes.tableTd}>{product.trademark}</td>
       <td className={classes.tableTd}>{product.name}</td>
+      <td className={classes.tableTd}>{product.category}</td>
+      <td className={classes.tableTd}>{product.subCategory && product.subCategory}</td>
+      <td className={classes.tableTd}>{product.trademark}</td>
       <td className={classes.tableTd}>{product.volume}</td>
       <td className={classes.tableTd}>{product.price}</td>
       <td className={classes.tableTd}>

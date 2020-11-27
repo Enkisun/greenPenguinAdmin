@@ -19,8 +19,8 @@ const Category = ({ category }) => {
     dispatch(setFilters(category, subcategory))
     dispatch(getProductsTC(currentPage, limit, category, subcategory, trademarkFilter));
   };
-  
-  const items = category.subCategory.map(subcategory => (
+
+  const items = category.subCategory.length && category.subCategory.map(subcategory => (
     <li key={subcategory} className={cn(classes.subCategory, {[classes.subCategoryActive]: subCategoryFilter === subcategory})}
      onClick={() => setFilter(category.category, subcategory)}>
       {subcategory}
@@ -29,11 +29,12 @@ const Category = ({ category }) => {
 
   return (
     <li>
-      <p className={cn(classes.categoryTitle, {[classes.categoryTitleActive]: categoryFilter === category.category})} onClick={() => setFilter(category.category)}>
+      <p className={cn(classes.categoryTitle, {[classes.categoryTitleActive]: categoryFilter === category.category})}
+       onClick={() => setFilter(category.category)}>
         {category.category}
       </p>
 
-      <ul className={cn(classes.subCategories, {[classes.subCategoriesActive]: (categoryFilter === category.category && items.length)})}>
+      <ul className={cn(classes.subCategories, {[classes.subCategoriesActive]: (categoryFilter === category.category && items)})}>
         {items}
       </ul>
     </li>
