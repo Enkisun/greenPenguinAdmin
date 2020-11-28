@@ -2,12 +2,14 @@ const ADD_PRODUCT = "ADD_PRODUCT";
 const DELETE_PRODUCTS = "DELETE_PRODUCTS";
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const SET_TOTAL_PRODUCTS_COUNT = "SET_TOTAL_PRODUCTS_COUNT";
+const SET_LOADING = "SET_LOADING";
 
 let initialState = {
   products: [],
   currentPage: 1,
   limit: 5,
   totalProductsCount: 0,
+  loading: false,
 }
 
 const productsReducer = (state = initialState, action) => {
@@ -32,6 +34,11 @@ const productsReducer = (state = initialState, action) => {
         ...state,
         totalProductsCount: action.totalProductsCount,
       }
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: action.bool,
+      }
     default:
       return state;
   }
@@ -41,6 +48,7 @@ export const addProduct = product => ({ type: ADD_PRODUCT, product });
 const deleteProducts = () => ({ type: DELETE_PRODUCTS })
 export const setCurrentPage = currentPage => ({ type: SET_CURRENT_PAGE, currentPage });
 const setTotalProductsCount = totalProductsCount => ({ type: SET_TOTAL_PRODUCTS_COUNT, totalProductsCount });
+export const setLoading = bool => ({ type: SET_LOADING, bool });
 
 const handleErrors = response => {
   if (!response.ok) {
@@ -57,8 +65,9 @@ const arrayBufferToBase64 = buffer => {
 };
 
 export const getProductsTC = (currentPage, limit, category = '', subCategory = '', trademark = '') => async dispatch => {
+  await dispatch(setLoading(true));
   await dispatch(deleteProducts());
-  await dispatch(setCurrentPage(currentPage));
+  // await dispatch(setCurrentPage(currentPage));
 
   const response = await fetch(`/api/products?page=${currentPage}&limit=${limit}&category=${category}&subCategory=${subCategory}&trademark=${trademark}`);
   const result = await handleErrors(response);
@@ -77,6 +86,7 @@ export const getProductsTC = (currentPage, limit, category = '', subCategory = '
       await dispatch(addProduct(product));
     }));
   }
+  dispatch(setLoading(false));
 };
 
 export default productsReducer;

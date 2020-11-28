@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addTrademarkFilter, removeTrademarkFilter } from '../../redux/trademarksReducer';
+import { setCurrentPage } from '../../redux/productsReducer';
 import cn from 'classnames';
 import classes from './trademark.module.css';
 import {ReactComponent as CheckIcon} from '../../assets/check.svg';
@@ -13,6 +14,7 @@ const trademark = ({ trademark }) => {
 
   const setFilter = useCallback(() => {
     setActiveTrademark(!activeTrademark);
+    dispatch(setCurrentPage(1));
     activeTrademark ? dispatch(removeTrademarkFilter(trademark)) : dispatch(addTrademarkFilter(trademark));
   }, [activeTrademark]);
 

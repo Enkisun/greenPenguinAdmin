@@ -20,6 +20,7 @@
 
 .table {
   width: inherit;
+  height: 800px;
   padding-right: 25px;
   color: #666;
 }

@@ -11,8 +11,6 @@ import classes from "./productsList.module.css";
 
 const ProductsList = () => {
 
-  let [loading, setLoading] = useState(false);
-
   let { request } = useHttp();
 
   const dispatch = useDispatch();
@@ -23,11 +21,10 @@ const ProductsList = () => {
   let subCategoryFilter = useSelector(state => state.categories.subCategoryFilter);
   let trademarkFilter = useSelector(state => state.trademarks.trademarkFilter);
   let createModal = useSelector(state => state.modals.createModal);
+  let loading = useSelector(state => state.products.loading);
 
   useEffect(() => {
-    setLoading(true)
     dispatch(getProductsTC(currentPage, limit, categoryFilter, subCategoryFilter, trademarkFilter))
-      .then(() => setLoading(false));
   }, [currentPage, trademarkFilter]);
 
   const onPageChanged = newCurrentPage => dispatch(setCurrentPage(newCurrentPage, limit));

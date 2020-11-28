@@ -1,23 +1,19 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilters } from '../../redux/categoriesReducer';
-import { getProductsTC } from '../../redux/productsReducer';
+import { setCurrentPage } from '../../redux/productsReducer';
 import cn from 'classnames';
 import classes from './category.module.css';
 
 const Category = ({ category }) => {
 
   const dispatch = useDispatch();
-
-  let currentPage = useSelector(state => state.products.currentPage);
-  let limit = useSelector(state => state.products.limit);
-  let trademarkFilter = useSelector(state => state.trademarks.trademarkFilter);
   let categoryFilter = useSelector(state => state.categories.categoryFilter);
   let subCategoryFilter = useSelector(state => state.categories.subCategoryFilter);
 
   const setFilter = (category, subcategory) => {
     dispatch(setFilters(category, subcategory))
-    dispatch(getProductsTC(currentPage, limit, category, subcategory, trademarkFilter));
+    dispatch(setCurrentPage(1));
   };
 
   const items = category.subCategory.length && category.subCategory.map(subcategory => (
