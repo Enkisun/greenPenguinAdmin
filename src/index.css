@@ -15,7 +15,8 @@ a {
 
 * {
   box-sizing: border-box;
-  border: none
+  border: none;
+  line-height: normal;
 }
 
 select {

@@ -38,15 +38,15 @@ const AddForm = ({ handleSubmit, modal, setModal, product }) => {
   let category = categories && categories.filter(category => {
     if (category.category === (product ? product.category : selectedCategory)) return category 
   });
-  let subCategoryOption = (category[0] && category[0].subCategory) && category[0].subCategory.map(subCategory => 
-    <option value={subCategory} key={subCategory}>{subCategory}</option>
+  let subcategoryOption = (category[0] && category[0].subcategory) && category[0].subcategory.map(subcategory => 
+    <option value={subcategory} key={subcategory}>{subcategory}</option>
   );
   let trademarkOption = trademarks && trademarks.map(trademark =>
     <option value={trademark.trademark} key={trademark._id}>{trademark.trademark}</option>
   );
 
   let categoryChildren = product ? categoryOption.filter(a => { if (a.props.value !== product.category) return a }) : categoryOption;
-  let subCategoryChildren = (product && subCategoryOption) ? subCategoryOption.filter(a => { if (a.props.value !== product.subCategory) return a }) : subCategoryOption;
+  let subcategoryChildren = (product && subcategoryOption) ? subcategoryOption.filter(a => { if (a.props.value !== product.subcategory) return a }) : subcategoryOption;
   let trademarksChildren = product ? trademarkOption.filter(a => { if (a.props.value !== product.trademark) return a }) : trademarkOption;
 
   const onChange = () => {
@@ -74,10 +74,10 @@ const AddForm = ({ handleSubmit, modal, setModal, product }) => {
           </div>
 
           <div className={cn(classes.group, {[classes.disabled]: !selectedCategory && !product})}>
-            <label htmlFor="subCategory" className={classes.label}>Subcategory</label>
-            <Field name="subCategory" setSelectedValue={setSelectedValue} component={Select} 
-             defaultValue={product ? product.subCategory : ''} value={selectedValue} onChange={e => setSelectedValue(e.target.value)}>
-              {subCategoryChildren}
+            <label htmlFor="subcategory" className={classes.label}>Subcategory</label>
+            <Field name="subcategory" setSelectedValue={setSelectedValue} component={Select} 
+             defaultValue={product ? product.subcategory : ''} value={selectedValue} onChange={e => setSelectedValue(e.target.value)}>
+              {subcategoryChildren}
             </Field>
           </div>
 

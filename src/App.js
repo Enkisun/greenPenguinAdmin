@@ -1,20 +1,21 @@
 import React from 'react';
-import CategoriesList from './components/Categories/CategoriesList';
-import ProductsList from './components/Products/ProductsList';
-import TrademarksList from './components/Trademarks/TrademarksList';
 import classes from './app.module.css';
+import { AuthContext } from './context/AuthContext';
+import { useAuth } from './hooks/auth.hook';
+import { useRoutes } from './routes';
 
 const App = () => {
-  return (
-    <div className={classes.container}>
-      <div>
-        <CategoriesList />
-        <TrademarksList />
-      </div>
+  const { login, logout, token, userId } = useAuth();
+  const isAuthenticated = !!token;
+  const routes = useRoutes(isAuthenticated);
 
-      <ProductsList />
-    </div>
-  )
+  return (
+    <AuthContext.Provider value={{ login, logout, token, userId, isAuthenticated }}>
+      <div className={classes.container}>
+        {routes}
+      </div>
+    </AuthContext.Provider>
+  );
 }
 
 export default App;

@@ -32,7 +32,7 @@ const Pagination = ({ currentPage, pageSize, onPageChanged, portionSize = 3 }) =
 
   return (
     <div className={classes.paginationWrapper}>
-      <button className={cn(classes.extremePages, {[classes.pageNumber]: currentPage > 1 })} onClick={() => onPageChanged(currentPage - 1)}>&lt; Назад</button>
+      <button className={cn(classes.extremePages, {[classes.extreme]: currentPage > 1 })} onClick={() => onPageChanged(currentPage - 1)}>&lt; Назад</button>
       <button className={cn(classes.extremePages, {[classes.pageNumber]: (leftPortionPageNumber - 1) >= 1})} onClick={() => onPageChanged(1)}>1</button>
       <span className={cn(classes.extremePages, {[classes.activeDots]: (leftPortionPageNumber - 1) > 1})}>..</span>
 
@@ -40,7 +40,7 @@ const Pagination = ({ currentPage, pageSize, onPageChanged, portionSize = 3 }) =
 
       <span className={cn(classes.extremePages, {[classes.activeDots]: (lastPage - rightPortionPageNumber) > 1})}>..</span>
       <button className={cn(classes.extremePages, {[classes.pageNumber]: (lastPage - rightPortionPageNumber) >= 1})} onClick={() => onPageChanged(lastPage)}>{lastPage}</button>
-      <button className={cn(classes.extremePages, {[classes.pageNumber]: currentPage < lastPage })} onClick={() => onPageChanged(currentPage + 1)}>Вперед &gt;</button>
+      <button className={cn(classes.extremePages, {[classes.extreme]: currentPage < lastPage })} onClick={() => onPageChanged(currentPage + 1)}>Вперед &gt;</button>
     </div>
   )
 }

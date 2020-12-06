@@ -1,6 +1,6 @@
 .container {
   width: 293px;
-  margin: 65px 31px 0;
+  margin: 30px;
   font-family: 'Roboto', sans-serif;
   font-size: 15px;
 }
@@ -12,6 +12,9 @@
 }
 
 .trademarksList {
+  max-height: 421px;
+  overflow-y: auto;
+  overflow-x: hidden;
   margin: 0;
   padding: 0;
   list-style: none;

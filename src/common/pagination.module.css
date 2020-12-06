@@ -1,10 +1,23 @@
 .paginationWrapper {
   display: flex;
   justify-content: center;
+  padding: 0 25px;
 }
 
 .extremePages {
   display: none;
+}
+
+.extreme {
+  display: block;
+  min-width: 28px;
+  height: 28px;
+  margin: 0 5px;
+  border: 1px solid #cadcb0;
+  background-color: #fff;
+  color: #666;
+  text-align: center;
+  cursor: pointer;
 }
 
 .activeDots {
@@ -26,6 +39,14 @@
   text-align: center;
   transition: background-color 1s, color .5s;
   cursor: pointer;
+}
+
+.extreme:focus {
+  background-color: transparent;
+}
+
+.pageNumber:focus {
+  background-color: #5f9e52;
 }
 
 .pageNumber:hover {

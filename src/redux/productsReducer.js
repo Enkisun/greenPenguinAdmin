@@ -45,7 +45,7 @@ const productsReducer = (state = initialState, action) => {
 }
 
 export const addProduct = product => ({ type: ADD_PRODUCT, product });
-const deleteProducts = () => ({ type: DELETE_PRODUCTS })
+export const deleteProducts = () => ({ type: DELETE_PRODUCTS })
 export const setCurrentPage = currentPage => ({ type: SET_CURRENT_PAGE, currentPage });
 const setTotalProductsCount = totalProductsCount => ({ type: SET_TOTAL_PRODUCTS_COUNT, totalProductsCount });
 export const setLoading = bool => ({ type: SET_LOADING, bool });
@@ -64,12 +64,10 @@ const arrayBufferToBase64 = buffer => {
   return window.btoa(binary);
 };
 
-export const getProductsTC = (currentPage, limit, category = '', subCategory = '', trademark = '') => async dispatch => {
+export const getProductsTC = (currentPage, limit, category = '', subcategory = '', trademark = '') => async dispatch => {
   await dispatch(setLoading(true));
   await dispatch(deleteProducts());
-  // await dispatch(setCurrentPage(currentPage));
-
-  const response = await fetch(`/api/products?page=${currentPage}&limit=${limit}&category=${category}&subCategory=${subCategory}&trademark=${trademark}`);
+  const response = await fetch(`/api/products?page=${currentPage}&limit=${limit}&category=${category}&subcategory=${subcategory}&trademark=${trademark}`);
   const result = await handleErrors(response);
   const json = await result.json();
 

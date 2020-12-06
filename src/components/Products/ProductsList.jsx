@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
+import { NavLink, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { AuthContext } from '../../context/AuthContext';
 import { getProductsTC, setCurrentPage } from '../../redux/productsReducer';
 import { setCreateModal } from '../../redux/modalsReducer';
 import { useHttp } from '../../hooks/http.hook';
@@ -11,33 +13,54 @@ import classes from "./productsList.module.css";
 
 const ProductsList = () => {
 
+  const history = useHistory();
+  const auth = useContext(AuthContext);
+
+  const logoutHandler = e => {
+    e.preventDefault();
+    auth.logout();
+    history.push('/');
+  }
+
   let { request } = useHttp();
 
   const dispatch = useDispatch();
-  let currentPage = useSelector(state => state.products.currentPage);
-  let limit = useSelector(state => state.products.limit);
-  let products = useSelector(state => state.products.products);
-  let categoryFilter = useSelector(state => state.categories.categoryFilter);
-  let subCategoryFilter = useSelector(state => state.categories.subCategoryFilter);
+  let { products, currentPage, limit, loading } = useSelector(state => state).products;
+  let { categoryFilter, subcategoryFilter,  } = useSelector(state => state).categories;
   let trademarkFilter = useSelector(state => state.trademarks.trademarkFilter);
   let createModal = useSelector(state => state.modals.createModal);
-  let loading = useSelector(state => state.products.loading);
 
   useEffect(() => {
-    dispatch(getProductsTC(currentPage, limit, categoryFilter, subCategoryFilter, trademarkFilter))
-  }, [currentPage, trademarkFilter]);
+    dispatch(getProductsTC(currentPage, limit, categoryFilter, subcategoryFilter, trademarkFilter))
+  }, [currentPage, categoryFilter, subcategoryFilter, trademarkFilter]);
 
-  const onPageChanged = newCurrentPage => dispatch(setCurrentPage(newCurrentPage, limit));
+  const onPageChanged = newCurrentPage => {
+    if (loading) return
+    dispatch(setCurrentPage(newCurrentPage, limit));
+  }
 
-  const items = products && products.map(product => (
-    <Product key={product._id} product={product} productsCount={products.length} request={request} dispatch={dispatch} />
+  const results = products && products.map(product => (
+    <Product key={product._id}
+     product={product}
+     productsCount={products.length}
+     currentPage={currentPage}
+     limit={limit}
+     categoryFilter={categoryFilter}
+     subcategoryFilter={subcategoryFilter}
+     trademarkFilter={trademarkFilter}
+     request={request}
+     dispatch={dispatch}
+    />
   ));
+
+  let items = results.length > 0 ? results : <p className={classes.emptyList}>Результатов нет</p>
 
   return (
     <div className={classes.container}>
       <header className={classes.header}>
-        <h1>Products List</h1>
         <CreateProduct request={request} modal={createModal} setModal={setCreateModal} />
+        <h1 className={classes.headerTitle}>Products List</h1>
+        <NavLink to='/auth' className={classes.logout} onClick={logoutHandler}>logout</NavLink>
       </header>
 
       <table className={classes.table}>
@@ -45,10 +68,9 @@ const ProductsList = () => {
           <tr className={classes.tableTr}>
             <th className={classes.tableTh}>Image</th>
             <th className={classes.tableTh}>Name</th>
-            <th className={classes.tableTh}>Category</th>
-            <th className={classes.tableTh}>Subcategory</th>
+            <th className={classes.tableTh}>Category / Subcategory</th>
             <th className={classes.tableTh}>Trademark</th>
-            <th className={classes.tableTh}>Volume</th>
+            <th className={classes.tableTh}>Volume / Weight</th>
             <th className={classes.tableTh}>Price</th>
             <th className={classes.tableTh}>Actions</th>
           </tr>

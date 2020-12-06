@@ -16,16 +16,16 @@
   color: #fff;
 }
 
-.subCategories {
+.subcategories {
   display: none;
 }
 
-.subCategoriesActive {
+.subcategoriesActive {
   display: block;
   padding: 4px 5px 4px 30px;
 }
 
-.subCategory {
+.subcategory {
   padding: 5px 0;
   font-size: 15px;
   color: #666;
@@ -33,6 +33,6 @@
   cursor: pointer;
 }
 
-.subCategoryActive {
+.subcategoryActive {
   color: #5f9e52;
 }

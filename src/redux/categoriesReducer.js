@@ -6,7 +6,7 @@ const DELETE_CATEGORIES = "DELETE_CATEGORIES";
 let initialState = {
   categories: [],
   categoryFilter: '',
-  subCategoryFilter: '',
+  subcategoryFilter: '',
 }
 
 const categoriesReducer = (state = initialState, action) => {
@@ -29,7 +29,7 @@ const categoriesReducer = (state = initialState, action) => {
     case SET_SUBCATEGORY_FILTER:
       return {
         ...state,
-        subCategoryFilter: action.subCategory,
+        subcategoryFilter: action.subcategory,
       }
     default:
       return state;
@@ -37,7 +37,7 @@ const categoriesReducer = (state = initialState, action) => {
 }
 
 const setCategoryFilter = category => ({ type: SET_CATEGORY_FILTER, category });
-const setSubCategoryFilter = subCategory => ({ type: SET_SUBCATEGORY_FILTER, subCategory });
+const setSubcategoryFilter = subcategory => ({ type: SET_SUBCATEGORY_FILTER, subcategory });
 export const addCategory = category => ({ type: ADD_CATEGORY, category });
 const deleteCategories = () => ({ type: DELETE_CATEGORIES })
 
@@ -48,9 +48,9 @@ const handleErrors = response => {
   return response;
 }
 
-export const setFilters = (category, subCategory) => async dispatch => {
-  await dispatch(setCategoryFilter(category));
-  subCategory && dispatch(setSubCategoryFilter(subCategory));
+export const setFilters = (category, subcategory = '', categoryFilter) => async dispatch => {
+  dispatch(setCategoryFilter(category));
+  dispatch(setSubcategoryFilter(categoryFilter === category ? subcategory : ''));
 }
 
 export const getCategoriesTC = () => async dispatch => {

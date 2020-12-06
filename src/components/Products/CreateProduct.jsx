@@ -16,7 +16,7 @@ const CreateProduct = ({ request, modal, setModal, product }) => {
   let limit = useSelector(state => state.products.limit);
   let trademarkFilter = useSelector(state => state.trademarks.trademarkFilter);
   let categoryFilter = useSelector(state => state.categories.categoryFilter);
-  let subCategoryFilter = useSelector(state => state.categories.subCategoryFilter);
+  let subcategoryFilter = useSelector(state => state.categories.subcategoryFilter);
 
   const onSubmit = async (formdata) => {
     product ? setModal(false) : dispatch(setModal(false));
@@ -27,19 +27,19 @@ const CreateProduct = ({ request, modal, setModal, product }) => {
     product && formData.append("id", product._id);
     formData.append("name", formdata.name);
     formData.append("category", formdata.category);
-    formdata.subCategory && formData.append("subCategory", formdata.subCategory);
+    formdata.subcategory && formData.append("subcategory", formdata.subcategory);
     formData.append("trademark", formdata.trademark);
     formData.append("volume", formdata.volume);
     formData.append("price", formdata.price);
     formData.append("description", formdata.description ? formdata.description : '');
 
     await request('api/trademarks', 'POST', {trademark: formdata.trademark});
-    await request('api/categories', 'POST', {category: formdata.category, subCategory: formdata.subCategory});
+    await request('api/categories', 'POST', {category: formdata.category, subcategory: formdata.subcategory});
     await fetch('api/products', { method: product ? 'PUT' : 'POST', body: formData });
 
     dispatch(getCategoriesTC());
     dispatch(getTrademarksTC());
-    dispatch(getProductsTC(currentPage, limit, categoryFilter, subCategoryFilter, trademarkFilter));
+    dispatch(getProductsTC(currentPage, limit, categoryFilter, subcategoryFilter, trademarkFilter));
   }
 
   return (
