@@ -1,4 +1,5 @@
 .container {
+  position: relative;
   width: 100%;
 }
 
@@ -37,7 +38,6 @@
 
 .table {
   width: inherit;
-  height: 800px;
   padding: 0 25px;
   color: #666;
 }

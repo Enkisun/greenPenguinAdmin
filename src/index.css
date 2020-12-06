@@ -29,8 +29,3 @@ select {
   outline-style: none;
   outline-width: 0px !important;
 }
-
-::marker {
-  font-size: 8px;
-  font-family: system-ui;
-}

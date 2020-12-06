@@ -18,11 +18,12 @@
 
 .subcategories {
   display: none;
+  list-style-type: circle !important;
 }
 
 .subcategoriesActive {
   display: block;
-  padding: 4px 5px 4px 30px;
+  padding: 4px 5px 4px 30px !important;
 }
 
 .subcategory {
@@ -31,6 +32,7 @@
   color: #666;
   word-break: break-all;
   cursor: pointer;
+  list-style-type: circle !important;
 }
 
 .subcategoryActive {
