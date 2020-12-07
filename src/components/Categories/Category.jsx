@@ -18,7 +18,7 @@ const Category = ({ category }) => {
   };
 
   const items = category.subcategory.length && category.subcategory.map(subcategory => (
-    <li key={subcategory} className={cn(classes.subcategory, {[classes.subcategoryActive]: subcategoryFilter === subcategory})}
+    <li key={subcategory} className={cn(classes.subcategory, 'browser-default', {[classes.subcategoryActive]: subcategoryFilter === subcategory})}
      onClick={() => setFilter(category.category, subcategory)}>
       {subcategory}
     </li>
@@ -31,7 +31,7 @@ const Category = ({ category }) => {
         {category.category}
       </p>
 
-      <ul className={cn(classes.subcategories, {[classes.subcategoriesActive]: (categoryFilter === category.category && items)})}>
+      <ul className={cn(classes.subcategories, 'browser-default', {[classes.subcategoriesActive]: (categoryFilter === category.category && items)})}>
         {items}
       </ul>
     </li>

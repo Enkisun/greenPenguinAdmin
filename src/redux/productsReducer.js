@@ -50,13 +50,6 @@ export const setCurrentPage = currentPage => ({ type: SET_CURRENT_PAGE, currentP
 const setTotalProductsCount = totalProductsCount => ({ type: SET_TOTAL_PRODUCTS_COUNT, totalProductsCount });
 export const setLoading = bool => ({ type: SET_LOADING, bool });
 
-const handleErrors = response => {
-  if (!response.ok) {
-    throw Error(response.statusText);
-  }
-  return response;
-}
-
 const arrayBufferToBase64 = buffer => {
   let binary = '';
   let bytes = [].slice.call(new Uint8Array(buffer));
@@ -68,8 +61,8 @@ export const getProductsTC = (currentPage, limit, category = '', subcategory = '
   await dispatch(setLoading(true));
   await dispatch(deleteProducts());
   const response = await fetch(`/api/products?page=${currentPage}&limit=${limit}&category=${category}&subcategory=${subcategory}&trademark=${trademark}`);
-  const result = await handleErrors(response);
-  const json = await result.json();
+  if (!response.ok) throw Error(response.statusText);
+  const json = await response.json();
 
   if (json) {
     await dispatch(setTotalProductsCount(json.totalProductsCount.totalProductsCount));

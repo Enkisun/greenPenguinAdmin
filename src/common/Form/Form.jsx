@@ -106,7 +106,7 @@ const AddForm = ({ handleSubmit, modal, setModal, product }) => {
 
         <div className={classes.formInputs}>
           <div className={`${classes.group} ${classes.textarea}`}>
-            <label htmlFor="description" className={classes.label}>Description</label>
+            <label htmlFor="description" className={`${classes.label} ${classes.textareaLabel}`}>Description</label>
             <Field name="description" component={Textarea} defaultValue={product ? product.description : ''} />
           </div>
 

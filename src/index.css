@@ -25,7 +25,15 @@ select {
   appearance:none;
 }
 
+select:focus {
+  outline: none;
+}
+
 :focus {
   outline-style: none;
-  outline-width: 0px !important;
+  outline-width: 0px;
+}
+
+button:focus {
+  background-color: transparent;
 }

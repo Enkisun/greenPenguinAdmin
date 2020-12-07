@@ -41,13 +41,6 @@ const setSubcategoryFilter = subcategory => ({ type: SET_SUBCATEGORY_FILTER, sub
 export const addCategory = category => ({ type: ADD_CATEGORY, category });
 const deleteCategories = () => ({ type: DELETE_CATEGORIES })
 
-const handleErrors = response => {
-  if (!response.ok) {
-    throw Error(response.statusText);
-  }
-  return response;
-}
-
 export const setFilters = (category, subcategory = '', categoryFilter) => async dispatch => {
   dispatch(setCategoryFilter(category));
   dispatch(setSubcategoryFilter(categoryFilter === category ? subcategory : ''));
@@ -57,8 +50,8 @@ export const getCategoriesTC = () => async dispatch => {
   await dispatch(deleteCategories());
 
   const response = await fetch(`/api/categories`);
-  const result = await handleErrors(response);
-  const json = await result.json();
+  if (!response.ok) throw Error(response.statusText);
+  const json = await response.json();
 
   if (json) {
     await Promise.all(json.categories.map(async category => await dispatch(addCategory(category)) ));

@@ -42,19 +42,12 @@ export const removeTrademarkFilter = trademark => ({ type: REMOVE_TRADEMARK_FILT
 export const addTrademark = trademark => ({ type: ADD_TRADEMARK, trademark });
 const deleteTrademarks = () => ({ type: DELETE_TRADEMARKS })
 
-const handleErrors = response => {
-  if (!response.ok) {
-    throw Error(response.statusText);
-  }
-  return response;
-}
-
 export const getTrademarksTC = () => async dispatch => {
   await dispatch(deleteTrademarks());
 
   const response = await fetch(`/api/trademarks`);
-  const result = await handleErrors(response);
-  const json = await result.json();
+  if (!response.ok) throw Error(response.statusText);
+  const json = await response.json();
 
   if (json) {
     await Promise.all(json.trademarks.map(async trademark => await dispatch(addTrademark(trademark)) ));

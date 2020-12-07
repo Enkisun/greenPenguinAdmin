@@ -12,7 +12,7 @@ export const Input = field => {
 
   return (
     <>
-      <input className={cn(classes.inputWrapper, {[classes.formError]: hasError})} {...field.input} type={field.type || "text"}
+      <input className={cn(classes.inputWrapper, "browser-default", {[classes.formError]: hasError})} {...field.input} type={field.type || "text"}
        value={value} onChange={e => setValue(e.target.value)} />
       { hasError && <span className={classes.spanError}>{field.meta.error}</span> }
     </>
@@ -54,7 +54,8 @@ export const Select = field => {
       </select>
 
       <label htmlFor={field.input.label}>
-        <input className={cn(classes.inputWrapper, {[classes.formError]: hasError, [classes.disable]: !fieldType})} {...field.input} value={localValue} onChange={e => setLocalValue(e.target.value)} />
+        <input className={cn(classes.inputWrapper, "browser-default", {[classes.formError]: hasError, [classes.disable]: !fieldType})} {...field.input}
+         value={localValue} onChange={e => setLocalValue(e.target.value)} type={field.type || "text"} />
         <PlusIcon className={cn(classes.icon, {[classes.disable]: fieldType})} onClick={() => changeType()} />
         <CheckIcon className={cn(classes.icon, classes.checkIcon, {[classes.disable]: !fieldType})} onClick={() => changeType()} />
       </label>

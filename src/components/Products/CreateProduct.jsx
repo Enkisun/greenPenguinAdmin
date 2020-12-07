@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CustomReduxForm } from '../../common/Form/Form';
 import { getCategoriesTC } from '../../redux/categoriesReducer';
@@ -9,14 +9,14 @@ import classes from './createProduct.module.css';
 
 const CreateProduct = ({ request, modal, setModal, product }) => {
 
-  const setFlag = () => product ? setModal(true) : dispatch(setModal(true));
+  const setFlag = useCallback(() => {
+    product ? setModal(true) : dispatch(setModal(true))
+  }, [product]);
 
   let dispatch = useDispatch();
-  let currentPage = useSelector(state => state.products.currentPage);
-  let limit = useSelector(state => state.products.limit);
+  let { currentPage, limit } = useSelector(state => state).products;
+  let { categoryFilter, subcategoryFilter } = useSelector(state => state).categories;
   let trademarkFilter = useSelector(state => state.trademarks.trademarkFilter);
-  let categoryFilter = useSelector(state => state.categories.categoryFilter);
-  let subcategoryFilter = useSelector(state => state.categories.subcategoryFilter);
 
   const onSubmit = async (formdata) => {
     product ? setModal(false) : dispatch(setModal(false));
