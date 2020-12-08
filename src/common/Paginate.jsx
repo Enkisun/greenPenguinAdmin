@@ -1,9 +1,9 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import cn from "classnames";
-import styles from "./pagination.module.css";
+import styles from "./paginate.module.css";
 
-const Pagination = ({ currentPage, pageSize, onPageChanged, portionSize = 3 }) => {
+const Paginate = ({ currentPage, pageSize, onPageChanged, portionSize = 3 }) => {
 
   let totalProductsCount = useSelector(state => state.products.totalProductsCount);
 
@@ -45,4 +45,4 @@ const Pagination = ({ currentPage, pageSize, onPageChanged, portionSize = 3 }) =
   )
 }
 
-export default Pagination;
+export default Paginate;

@@ -5,7 +5,7 @@ import { AuthContext } from '../../context/AuthContext';
 import { getProductsTC, setCurrentPage } from '../../redux/productsReducer';
 import { setCreateModal } from '../../redux/modalsReducer';
 import { useHttp } from '../../hooks/http.hook';
-import Pagination from '../../common/Pagination';
+import Paginate from '../../common/Paginate';
 import Preloader from '../../common/Preloader';
 import CreateProduct from './CreateProduct';
 import Product from './Product';
@@ -79,7 +79,7 @@ const ProductsList = () => {
         </tbody>
       </table>
 
-      <Pagination currentPage={currentPage} pageSize={limit} onPageChanged={onPageChanged} />
+      <Paginate currentPage={currentPage} pageSize={limit} onPageChanged={onPageChanged} />
     </div>
   )
 };
