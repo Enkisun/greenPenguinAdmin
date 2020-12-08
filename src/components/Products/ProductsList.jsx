@@ -9,7 +9,7 @@ import Pagination from '../../common/Pagination';
 import Preloader from '../../common/Preloader';
 import CreateProduct from './CreateProduct';
 import Product from './Product';
-import classes from "./productsList.module.css";
+import styles from "./productsList.module.css";
 
 const ProductsList = () => {
 
@@ -53,26 +53,26 @@ const ProductsList = () => {
     />
   ));
 
-  let items = results.length > 0 ? results : <p className={classes.emptyList}>Результатов нет</p>
+  let items = results.length > 0 ? results : <p className={styles.emptyList}>Результатов нет</p>
 
   return (
-    <div className={classes.container}>
-      <header className={classes.header}>
+    <div className={styles.container}>
+      <header className={styles.header}>
         <CreateProduct request={request} modal={createModal} setModal={setCreateModal} />
-        <h1 className={classes.headerTitle}>Products List</h1>
-        <NavLink to='/auth' className={classes.logout} onClick={logoutHandler}>logout</NavLink>
+        <h1 className={styles.headerTitle}>Products List</h1>
+        <NavLink to='/auth' className={styles.logout} onClick={logoutHandler}>logout</NavLink>
       </header>
 
-      <table className={classes.table}>
+      <table className={styles.table}>
         <tbody>
-          <tr className={classes.tableTr}>
-            <th className={classes.tableTh}>Image</th>
-            <th className={classes.tableTh}>Name</th>
-            <th className={classes.tableTh}>Category / Subcategory</th>
-            <th className={classes.tableTh}>Trademark</th>
-            <th className={classes.tableTh}>Volume / Weight</th>
-            <th className={classes.tableTh}>Price</th>
-            <th className={classes.tableTh}>Actions</th>
+          <tr className={styles.tableTr}>
+            <th className={styles.tableTh}>Image</th>
+            <th className={styles.tableTh}>Name</th>
+            <th className={styles.tableTh}>Category / Subcategory</th>
+            <th className={styles.tableTh}>Trademark</th>
+            <th className={styles.tableTh}>Volume / Weight</th>
+            <th className={styles.tableTh}>Price</th>
+            <th className={styles.tableTh}>Actions</th>
           </tr>
 
           {loading ? <Preloader /> : items}

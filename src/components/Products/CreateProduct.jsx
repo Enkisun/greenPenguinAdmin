@@ -5,7 +5,7 @@ import { getCategoriesTC } from '../../redux/categoriesReducer';
 import { getTrademarksTC } from '../../redux/trademarksReducer';
 import { getProductsTC } from '../../redux/productsReducer';
 import cn from 'classnames';
-import classes from './createProduct.module.css';
+import styles from './createProduct.module.css';
 
 const CreateProduct = ({ request, modal, setModal, product }) => {
 
@@ -29,7 +29,8 @@ const CreateProduct = ({ request, modal, setModal, product }) => {
     formData.append("category", formdata.category);
     formdata.subcategory && formData.append("subcategory", formdata.subcategory);
     formData.append("trademark", formdata.trademark);
-    formData.append("volume", formdata.volume);
+    formData.append("volume", formdata.volume ? formdata.volume : 0);
+    formData.append("weight", formdata.weight ? formdata.weight : 0);
     formData.append("price", formdata.price);
     formData.append("description", formdata.description ? formdata.description : '');
 
@@ -44,7 +45,7 @@ const CreateProduct = ({ request, modal, setModal, product }) => {
 
   return (
     <>
-      <button className={cn(classes.createButton, {[classes.edit]: product})} onClick={setFlag}>{product ? 'Edit' : 'Create'}</button>
+      <button className={cn(styles.createButton, {[styles.edit]: product})} onClick={setFlag}>{product ? 'Edit' : 'Create'}</button>
       { modal && <CustomReduxForm onSubmit={onSubmit} modal={modal} setModal={setModal} product={product} initialValues={{...product}} /> }
     </>
   )

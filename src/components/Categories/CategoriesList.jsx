@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCategoriesTC } from '../../redux/categoriesReducer'
 import Category from './Category'
-import classes from './categoriesList.module.css'
+import styles from './categoriesList.module.css'
 
 const CategoriesList = () => {
 
@@ -19,9 +19,9 @@ const CategoriesList = () => {
   ));
 
   return (
-    <div className={classes.container}>
-      <h3 className={classes.categoriesListTitle}>Categories List</h3>
-      <ul className={classes.categoriesList}>
+    <div className={styles.container}>
+      <h3 className={styles.categoriesListTitle}>Categories List</h3>
+      <ul className={styles.categoriesList}>
         {items}
       </ul>
     </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import cn from "classnames";
-import classes from "./pagination.module.css";
+import styles from "./pagination.module.css";
 
 const Pagination = ({ currentPage, pageSize, onPageChanged, portionSize = 3 }) => {
 
@@ -23,7 +23,7 @@ const Pagination = ({ currentPage, pageSize, onPageChanged, portionSize = 3 }) =
   let portionItems = pages.filter(page => page >= leftPortionPageNumber && page <= rightPortionPageNumber);
 
   let portionItem = portionItems.map(page => (
-    <button key={page} className={cn(classes.pageNumber, {[classes.selectedPage]: currentPage === page})} onClick={() => onPageChanged(page)}>
+    <button key={page} className={cn(styles.pageNumber, {[styles.selectedPage]: currentPage === page})} onClick={() => onPageChanged(page)}>
       {page}
     </button>
   ));
@@ -31,16 +31,16 @@ const Pagination = ({ currentPage, pageSize, onPageChanged, portionSize = 3 }) =
   if (totalProductsCount <= pageSize) return <></>
 
   return (
-    <div className={classes.paginationWrapper}>
-      <button className={cn(classes.extremePages, {[classes.extreme]: currentPage > 1 })} onClick={() => onPageChanged(currentPage - 1)}>&lt; Назад</button>
-      <button className={cn(classes.extremePages, {[classes.pageNumber]: (leftPortionPageNumber - 1) >= 1})} onClick={() => onPageChanged(1)}>1</button>
-      <span className={cn(classes.extremePages, {[classes.activeDots]: (leftPortionPageNumber - 1) > 1})}>..</span>
+    <div className={styles.paginationWrapper}>
+      <button className={cn(styles.extremePages, {[styles.extreme]: currentPage > 1 })} onClick={() => onPageChanged(currentPage - 1)}>&lt; Назад</button>
+      <button className={cn(styles.extremePages, {[styles.pageNumber]: (leftPortionPageNumber - 1) >= 1})} onClick={() => onPageChanged(1)}>1</button>
+      <span className={cn(styles.extremePages, {[styles.activeDots]: (leftPortionPageNumber - 1) > 1})}>..</span>
 
       {portionItem}
 
-      <span className={cn(classes.extremePages, {[classes.activeDots]: (lastPage - rightPortionPageNumber) > 1})}>..</span>
-      <button className={cn(classes.extremePages, {[classes.pageNumber]: (lastPage - rightPortionPageNumber) >= 1})} onClick={() => onPageChanged(lastPage)}>{lastPage}</button>
-      <button className={cn(classes.extremePages, {[classes.extreme]: currentPage < lastPage })} onClick={() => onPageChanged(currentPage + 1)}>Вперед &gt;</button>
+      <span className={cn(styles.extremePages, {[styles.activeDots]: (lastPage - rightPortionPageNumber) > 1})}>..</span>
+      <button className={cn(styles.extremePages, {[styles.pageNumber]: (lastPage - rightPortionPageNumber) >= 1})} onClick={() => onPageChanged(lastPage)}>{lastPage}</button>
+      <button className={cn(styles.extremePages, {[styles.extreme]: currentPage < lastPage })} onClick={() => onPageChanged(currentPage + 1)}>Вперед &gt;</button>
     </div>
   )
 }

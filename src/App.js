@@ -1,8 +1,8 @@
 import React from 'react';
-import classes from './app.module.css';
 import { AuthContext } from './context/AuthContext';
 import { useAuth } from './hooks/auth.hook';
 import { useRoutes } from './routes';
+import styles from './app.module.css';
 
 const App = () => {
   const { login, logout, token, userId } = useAuth();
@@ -11,7 +11,7 @@ const App = () => {
 
   return (
     <AuthContext.Provider value={{ login, logout, token, userId, isAuthenticated }}>
-      <div className={classes.container}>
+      <div className={styles.container}>
         {routes}
       </div>
     </AuthContext.Provider>

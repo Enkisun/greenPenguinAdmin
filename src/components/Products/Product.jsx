@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { getProductsTC, setCurrentPage } from '../../redux/productsReducer';
 import CreateProduct from './CreateProduct';
-import classes from "./product.module.css";
+import styles from "./product.module.css";
 import defaultImage from "../../assets/defaultImage.svg";
 
 const Product = ({ product, productsCount, currentPage, limit, categoryFilter, subcategoryFilter, trademarkFilter, request, dispatch }) => {
@@ -17,19 +17,19 @@ const Product = ({ product, productsCount, currentPage, limit, categoryFilter, s
   }
 
   return (
-    <tr className={classes.tableTr}>
-      <td className={classes.tableTd}>
-        <img className={classes.productImage} src={product.image ? product.image.src : defaultImage} alt="productImage" />
+    <tr className={styles.tableTr}>
+      <td className={styles.tableTd}>
+        <img className={styles.productImage} src={product.image ? product.image.src : defaultImage} alt="productImage" />
       </td>
-      <td className={classes.tableTd}>{product.name}</td>
-      <td className={classes.tableTd}>{product.category}{product.subcategory && ` / ${product.subcategory}`}</td>
-      <td className={classes.tableTd}>{product.trademark}</td>
-      <td className={classes.tableTd}>{product.volume} мл/гр</td>
-      <td className={classes.tableTd}>{product.price} руб</td>
-      <td className={classes.tableTd}>
-        <div className={classes.btnWrapper}>
+      <td className={styles.tableTd}>{product.name}</td>
+      <td className={styles.tableTd}>{product.category}{product.subcategory && ` / ${product.subcategory}`}</td>
+      <td className={styles.tableTd}>{product.trademark}</td>
+      <td className={styles.tableTd}>{product.volume ? `${product.volume} мл` : `${product.weight} гр`}</td>
+      <td className={styles.tableTd}>{product.price} руб</td>
+      <td className={styles.tableTd}>
+        <div className={styles.btnWrapper}>
           <CreateProduct request={request} modal={modal} setModal={setModal} product={product} />
-          <button className={`${classes.btn} ${classes.deleteBtn}`} onClick={() => deleteHandler(product._id)}>Delete</button>
+          <button className={`${styles.btn} ${styles.deleteBtn}`} onClick={() => deleteHandler(product._id)}>Delete</button>
         </div>
       </td>
     </tr>
