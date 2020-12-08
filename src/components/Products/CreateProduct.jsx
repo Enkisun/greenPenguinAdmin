@@ -25,7 +25,7 @@ const CreateProduct = ({ request, modal, setModal, product }) => {
     let imageFile = document.getElementById("imageSrc").files[0];
     formData.append("image", imageFile);
     product && formData.append("id", product._id);
-    formData.append("name", formdata.name);
+    formData.append("name", formdata.name.trim());
     formData.append("category", formdata.category);
     formdata.subcategory && formData.append("subcategory", formdata.subcategory);
     formData.append("trademark", formdata.trademark);

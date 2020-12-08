@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Field, reduxForm } from "redux-form";
 import { Input, Textarea, Select } from "./formsControl";
-import { requiredField, isNumber } from "./validators";
+import { requiredField, isNumber, isEmpty } from "./validators";
 import cn from 'classnames';
 import styles from "./form.module.css";
 
@@ -92,7 +92,7 @@ const AddForm = ({ handleSubmit, modal, setModal, product }) => {
 
           <div className={styles.group}>
             <label htmlFor="name" className={styles.label}>Name *</label>
-            <Field validate={[requiredField]} name="name" component={Input} defaultValue={product ? product.name : ''} />
+            <Field validate={[requiredField, isEmpty]} name="name" component={Input} defaultValue={product ? product.name : ''} />
           </div>
 
           <div className={styles.group}>
