@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCategoriesTC } from '../../redux/categoriesReducer'
 import Category from './Category'
-import styles from './categoriesList.module.css'
+import styles from './categories.module.css'
 
 const CategoriesList = () => {
 
