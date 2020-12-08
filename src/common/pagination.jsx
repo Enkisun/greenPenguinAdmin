@@ -8,7 +8,7 @@ const Pagination = ({ currentPage, pageSize, onPageChanged, portionSize = 3 }) =
   let totalProductsCount = useSelector(state => state.products.totalProductsCount);
 
   let pagesCount = Math.ceil(totalProductsCount / pageSize);
-  let pages = [];
+  let pages = [];    
 
   for (let i = 1; i <= pagesCount; i++) { pages.push(i); }
 
