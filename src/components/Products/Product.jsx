@@ -6,7 +6,7 @@ import defaultImage from "../../assets/defaultImage.svg";
 
 const Product = ({ product, productsCount, currentPage, limit, categoryFilter, subcategoryFilter, trademarkFilter, request, dispatch }) => {
 
-  let [modal, setModal] = useState(false);
+  const [modal, setModal] = useState(false);
 
   const deleteHandler = async (id) => {
     try {
@@ -28,7 +28,7 @@ const Product = ({ product, productsCount, currentPage, limit, categoryFilter, s
       <td className={styles.tableTd}>{product.price} руб</td>
       <td className={styles.tableTd}>
         <div className={styles.btnWrapper}>
-          <CreateProduct request={request} modal={modal} setModal={setModal} product={product} />
+          <CreateProduct modal={modal} setModal={setModal} product={product} />
           <button className={`${styles.btn} ${styles.deleteBtn}`} onClick={() => deleteHandler(product._id)}>Delete</button>
         </div>
       </td>

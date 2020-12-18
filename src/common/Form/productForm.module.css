@@ -1,6 +1,6 @@
 .formParams {
   position: fixed;
-  top: 150px;
+  top: 80px;
   left: 50%;
   display: none;
   width: -moz-fit-content;
@@ -33,17 +33,6 @@
   margin: 0 40px 20px;
 }
 
-.group {
-  position: relative;
-  display: block;
-  height: 100%;
-  margin-bottom: 20px;
-}
-
-.textarea {
-  padding-top: 28px;
-}
-
 .submit {
   position: relative;
   display: flex;
@@ -53,14 +42,6 @@
 
 .disabled {
   display: none;
-}
-
-.label {
-  position: absolute;
-  left: 15px;
-  top: 8px;
-  font-size: .7rem;
-  color: #888da8;
 }
 
 .textareaLabel {
@@ -75,13 +56,12 @@
 }
 
 .fileButton {
-  background-color: #768d87;
+  background-color: #4289bb;
   border-radius: 5px;
-  border: 2px solid #566963;
   color: #ffffff;
   font-size: 15px;
   font-weight: bold;
-  padding: 5px;
+  padding: 8px;
   margin-right: 10px;
   cursor: pointer;
 }

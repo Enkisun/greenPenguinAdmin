@@ -1,52 +1,18 @@
-import React, { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { CustomReduxForm } from '../../common/Form/Form';
-import { getCategoriesTC } from '../../redux/categoriesReducer';
-import { getTrademarksTC } from '../../redux/trademarksReducer';
-import { getProductsTC } from '../../redux/productsReducer';
-import cn from 'classnames';
-import styles from './createProduct.module.css';
+import React from 'react'
+import { ProductForm } from '../../common/Form/ProductForm'
+import cn from 'classnames'
+import styles from './createProduct.module.css'
 
-const CreateProduct = ({ request, modal, setModal, product }) => {
-
-  const setFlag = useCallback(() => {
-    product ? setModal(true) : dispatch(setModal(true))
-  }, [product]);
-
-  let dispatch = useDispatch();
-  let { currentPage, limit } = useSelector(state => state).products;
-  let { categoryFilter, subcategoryFilter } = useSelector(state => state).categories;
-  let trademarkFilter = useSelector(state => state.trademarks.trademarkFilter);
-
-  const onSubmit = async (formdata) => {
-    product ? setModal(false) : dispatch(setModal(false));
-    
-    let formData = new FormData();
-    let imageFile = document.getElementById("imageSrc").files[0];
-    formData.append("image", imageFile);
-    product && formData.append("id", product._id);
-    formData.append("name", formdata.name.trim());
-    formData.append("category", formdata.category);
-    formdata.subcategory && formData.append("subcategory", formdata.subcategory);
-    formData.append("trademark", formdata.trademark);
-    formData.append("volume", formdata.volume ? formdata.volume : 0);
-    formData.append("weight", formdata.weight ? formdata.weight : 0);
-    formData.append("price", formdata.price);
-    formData.append("description", formdata.description ? formdata.description : '');
-
-    await request('api/trademarks', 'POST', {trademark: formdata.trademark});
-    await request('api/categories', 'POST', {category: formdata.category, subcategory: formdata.subcategory});
-    await fetch('api/products', { method: product ? 'PUT' : 'POST', body: formData });
-
-    dispatch(getCategoriesTC());
-    dispatch(getTrademarksTC());
-    dispatch(getProductsTC(currentPage, limit, categoryFilter, subcategoryFilter, trademarkFilter));
-  }
+// create?
+const CreateProduct = ({ modal, setModal, product }) => {
 
   return (
     <>
-      <button className={cn(styles.createButton, {[styles.edit]: product})} onClick={setFlag}>{product ? 'Edit' : 'Create'}</button>
-      { modal && <CustomReduxForm onSubmit={onSubmit} modal={modal} setModal={setModal} product={product} initialValues={{...product}} /> }
+      <button className={cn(styles.createButton, {[styles.edit]: product})} onClick={() => setModal(true)}>
+        {product ? 'Edit' : 'Create'}
+      </button>
+      
+      { modal && <ProductForm modal={modal} setModal={setModal} product={product} /> }
     </>
   )
 }

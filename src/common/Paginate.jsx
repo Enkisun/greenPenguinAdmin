@@ -1,7 +1,7 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import cn from "classnames";
-import styles from "./paginate.module.css";
+import React from 'react'
+import { useSelector } from 'react-redux'
+import cn from 'classnames'
+import styles from './paginate.module.css'
 
 const Paginate = ({ currentPage, pageSize, onPageChanged, portionSize = 3 }) => {
 
@@ -28,7 +28,7 @@ const Paginate = ({ currentPage, pageSize, onPageChanged, portionSize = 3 }) => 
     </button>
   ));
 
-  if (totalProductsCount <= pageSize) return <></>
+  if (totalProductsCount <= pageSize) return null;
 
   return (
     <div className={styles.paginationWrapper}>

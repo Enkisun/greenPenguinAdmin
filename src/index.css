@@ -19,21 +19,7 @@ a {
   line-height: normal;
 }
 
-select {
-  -moz-appearance:none;
-  -webkit-appearance:none;
-  appearance:none;
-}
-
-select:focus {
-  outline: none;
-}
-
 :focus {
   outline-style: none;
   outline-width: 0px;
-}
-
-button:focus {
-  background-color: transparent;
 }

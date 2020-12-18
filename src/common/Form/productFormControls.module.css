@@ -1,0 +1,87 @@
+.group {
+  position: relative;
+  display: block;
+  height: 100%;
+  margin-bottom: 20px;
+}
+
+.label {
+  position: absolute;
+  left: 15px;
+  top: 8px;
+  font-size: .7rem;
+  color: #4289bb;
+}
+
+.inputWrapper {
+  display: block;
+  width: 350px;
+  height: 58px;
+  padding: 28px 15px 8px;
+  border: 1px solid #4289bb;
+  border-radius: 5px;
+  font-family: 'Exo', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.formError {
+  border: 1px solid red;
+}
+
+.textarea {
+  height: 100%;
+  padding: 15px;
+  resize: none;
+}
+
+.select {
+  font-size: 14px;
+  cursor: pointer;
+  background: url(../../assets/arrow.svg) no-repeat right;
+  -webkit-appearance: none;
+  background-position-x: 320px;
+  background-position-y: 30px;
+  background-size: 14px;
+}
+
+.iconWrapper {
+  position: absolute;
+  top: 75%;
+  right: -25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background-color: inherit;
+  cursor: pointer;
+}
+
+.subInput {
+  border: none;
+  border-bottom: 2px solid #4289bb;
+  height: 40px;
+  padding: 15px 15px 10px;
+}
+
+.subInput::placeholder {
+  font-size: 11px;
+  padding-bottom: 8px;
+}
+
+.disabled {
+  display: none;
+}
+
+.keyOption {
+  font-weight: bold;
+}
+
+.spanError {
+  position: absolute;
+  top: 8px;
+  right: 15px;
+  font-size: .7rem;
+  color: red;
+}

@@ -1,4 +1,4 @@
-import {useCallback, useState} from 'react';
+import {useCallback, useState} from 'react'
 
 export const useHttp = () => {
 
@@ -10,7 +10,7 @@ export const useHttp = () => {
     try {
       if (body) {
         body = JSON.stringify(body);
-        headers['Content-Type'] = 'application/json';
+        headers['Access-Control-Allow-Origin'] = '*';
       }
 
       const response = await fetch(url, { method, body, headers });
