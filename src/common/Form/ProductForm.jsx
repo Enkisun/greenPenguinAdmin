@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
-import { useHttp } from '../../hooks/http.hook'
+import { getCategoriesTC } from '../../redux/categoriesReducer'
+import { getTrademarksTC } from '../../redux/trademarksReducer'
+import { getProductsTC } from '../../redux/productsReducer'
 import { Input, Textarea, Select } from './ProductFormControls'
 import cn from 'classnames'
 import styles from './productForm.module.css'
 
 export const ProductForm = ({ modal, setModal, product }) => {
-
-  const { request } = useHttp();
 
   const productFormRef = useRef();
   const [imageText, setImageText] = useState(product?.image?.name);
@@ -32,58 +32,66 @@ export const ProductForm = ({ modal, setModal, product }) => {
 
   const { errors, register, handleSubmit, watch, setValue } = useForm({
     defaultValues: { 
-      Name: product?.name || '',
-      Volume: product?.volume || '',
-      Weight: product?.weight || '',
-      Price: product?.price || 0,
-      Description: product?.description || '',
       Category: product?.category || '',
       Subcategory: product?.subcategory || '',
       Trademark: product?.trademark || '',
+      Name: product?.name || '',
+      Size: product?.size || 0,
+      Unit: product?.unit || 'мг',
+      Price: product?.price || 0,
+      Description: product?.description || '',
     }
   });
 
-  const { Category, Subcategory, Trademark, Volume, Weight, Price, Name } = watch();
+  const { Category, Subcategory, Trademark, Unit } = watch();
 
   const onSubmit = async (data) => {
-    console.log(data);
     setModal(false)
     
     const formData = new FormData();
-    const imageFile = data.imageSrc[0];
-    formData.append("image", imageFile);
+
     product && formData.append("id", product._id);
     formData.append("category", data.Category);
     formData.append("subcategory", data.Subcategory);
     formData.append("trademark", data.Trademark);
     formData.append("name", data.Name);
-    formData.append("volume", data.Volume ? Number(data.Volume).toFixed(2) : 0);
-    formData.append("weight", data.Weight ? Number(data.Weight).toFixed(2) : 0);
-    formData.append("price", Number(data.Price).toFixed(2));
+    formData.append("size", data.Size ? Number(data.Size).toFixed(2) : 0);
+    formData.append("unit", data.Unit);
+    formData.append("price", data.Price ? Number(data.Price).toFixed(2) : 0);
     formData.append("description", data.Description);
+    formData.append("image", data.imageSrc[0]);
 
-    // try/catch
-    await request('api/trademarks', 'POST', {trademark: data.Trademark});
-    await request('api/categories', 'POST', {category: data.Category, subcategory: data.Subcategory});
-    await request('api/products', product ? 'PUT' : 'POST', { body: formData });
+    try {
+      await fetch(`api/categories?category=${data.Category}&subcategory=${data.Subcategory}`, {method: 'POST'});
+      await fetch(`api/trademarks?trademark=${data.Trademark}`, {method: 'POST'});
+      await fetch('api/products', {method: product ? 'PUT' : 'POST', body: formData});
+    } catch (e) {
+      console.log(e.message);
+    }
 
     dispatch(getCategoriesTC());
     dispatch(getTrademarksTC());
     dispatch(getProductsTC(currentPage, limit, categoryFilter, subcategoryFilter, trademarkFilter));
   }
 
-  const categoryOptions = categories && categories.map(category => 
+  const categoryOptions = categories?.map(category => 
     <option value={category.category} key={category._id}>{category.category}</option>
   );
-  const currentCategory = categories && categories.filter(category => {
+  const currentCategory = categories?.filter(category => {
     if (category.category === Category) return category 
   });
   const subcategoryOptions = currentCategory[0]?.subcategory.map(subcategory => 
     <option value={subcategory} key={subcategory}>{subcategory}</option>
   );
-  const trademarkOptions = trademarks && trademarks.map(trademark =>
+  const trademarkOptions = trademarks?.map(trademark =>
     <option value={trademark.trademark} key={trademark._id}>{trademark.trademark}</option>
   );
+  const unitOptions = (
+    <>
+      <option value='мг'>мг</option>
+      <option value='гр'>гр</option>
+    </>
+  )
 
   const onChangeImage = e => {
     setImageText(e.target.files[0].name);
@@ -91,7 +99,7 @@ export const ProductForm = ({ modal, setModal, product }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={cn(styles.formParams, {[styles.formParamsActive]: modal})} ref={productFormRef}>
-      <h2 className={styles.title}>{product ? 'Edit Product' : 'Create Product'}</h2>
+      <h2 className={styles.title}>{product ? 'Edit product' : 'Create a new product'}</h2>
 
       <div className={styles.formWrapper}>
         <div className={styles.formInputs}>
@@ -123,10 +131,22 @@ export const ProductForm = ({ modal, setModal, product }) => {
            setValue={setValue} 
           />
 
-          <Input label='Name' type='text' register={register} errors={errors} value={Name} setValue={setValue} required='true' />
-          <Input label='Volume' type='number' register={register} errors={errors} value={Volume} setValue={setValue} />
-          <Input label='Weight' type='number' register={register} errors={errors} value={Weight} setValue={setValue} />
-          <Input label='Price' type='number' register={register} errors={errors} value={Price} setValue={setValue} required='true' />
+          <Input label='Name' type='text' register={register} errors={errors} required='true' />
+
+          <div className={styles.group}>
+            <Input label='Size' type='number' register={register} errors={errors} />
+
+            <Select 
+             label='Unit' 
+             options={unitOptions} 
+             register={register} 
+             errors={errors} 
+             value={Unit} 
+             setValue={setValue} 
+            />
+          </div>
+          
+          <Input label='Price' type='number' register={register} errors={errors} required='true' />
         </div>
 
         <div className={styles.formInputs}>

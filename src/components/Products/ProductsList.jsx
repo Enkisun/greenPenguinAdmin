@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProductsTC, setCurrentPage } from '../../redux/productsReducer'
-import { useHttp } from '../../hooks/http.hook'
 import Paginate from '../../common/Paginate'
 import Preloader from '../../common/Preloader'
 import CreateProduct from './CreateProduct'
@@ -11,8 +10,6 @@ import styles from './productsList.module.css'
 const ProductsList = () => {
 
   const [modal, setModal] = useState(false);
-
-  const { request } = useHttp();
 
   const dispatch = useDispatch();
   let { products, currentPage, limit, loading } = useSelector(state => state.products);
@@ -37,7 +34,6 @@ const ProductsList = () => {
      categoryFilter={categoryFilter}
      subcategoryFilter={subcategoryFilter}
      trademarkFilter={trademarkFilter}
-     request={request}
      dispatch={dispatch}
     />
   ));

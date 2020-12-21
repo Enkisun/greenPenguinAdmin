@@ -23,3 +23,8 @@ a {
   outline-style: none;
   outline-width: 0px;
 }
+
+select:disabled {
+  opacity: 0.5;
+  cursor: default;
+}

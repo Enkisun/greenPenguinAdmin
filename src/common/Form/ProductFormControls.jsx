@@ -3,22 +3,21 @@ import cn from 'classnames'
 import styles from './productFormControls.module.css'
 import {ReactComponent as CheckIcon} from '../../assets/check.svg'
 
-export const Input = ({ label, type, register, errors, value, setValue, required = false }) => {
+export const Input = ({ label, type, register, errors, required = false }) => {
   return (
     <div className={styles.group}>
       <label htmlFor={label} className={styles.label}>{label}</label>
+
       <input
        name={label}
-       value={value}
-       onChange={e => setValue(label, e.target.value)}
-       ref={register(required && { required: `${label} is a required` })} 
-       type={type} 
-       min='0' 
-       max='100000' 
+       ref={register(required && { required: `${label} is a required` })}
+       type={type}
+       min='0'
+       max='100000'
        step='0.01'
-       className={cn(styles.inputWrapper, {[styles.formError]: errors[label]})}
-      //  disabled={label === 'Weight' && }
+       className={cn(styles.inputWrapper, {[styles.formError]: errors[label], [styles.size]: label === 'Size'})}
       />
+
       <span className={styles.spanError}>{errors[label]?.message}</span>
     </div>
   );
@@ -26,9 +25,14 @@ export const Input = ({ label, type, register, errors, value, setValue, required
 
 export const Textarea = ({ label, register, errors }) => {
   return (
-    <div className={styles.group}>
-      <label htmlFor={label} className={styles.label}>{label}</label>
-      <textarea name={label} className={cn(styles.inputWrapper, styles.textarea, {[styles.formError]: errors[label]})} ref={register} />
+    <div className={cn(styles.group, styles.textareaGroup)}>
+      <textarea 
+       name={label} 
+       ref={register}
+       placeholder={label}
+       className={cn(styles.inputWrapper, styles.textarea, {[styles.formError]: errors[label]})} 
+      />
+
       <span className={styles.spanError}>{errors[label]?.message}</span>
     </div>
   );
@@ -45,14 +49,20 @@ export const Select = ({ label, options, register, errors, value, setValue, sele
 
   const onChange = e => {
     const { selectedIndex, length } = selectRef.current.options;
-    if (label === 'Category') setValue('Subcategory', '');
+
+    if (label === 'Category') {
+      setValue('Subcategory', '');
+    }
+
     if (selectedIndex === length - 1) {
       setValue(label, '');
       setActiveSubInput(true);
-    } else changeSelectValue(e);
+    } else {
+      changeSelectValue(e);
+    }
   }
 
-  const isShowRequiredErrorMessage = !!(label !== 'Subcategory' && !value);
+  const isShowRequiredErrorMessage = !!((label === 'Category' || label === 'Trademark') && !value);
 
   return (
     <div className={styles.group}>
@@ -63,8 +73,8 @@ export const Select = ({ label, options, register, errors, value, setValue, sele
        value={value}
        onChange={onChange}
        ref={e => { register(isShowRequiredErrorMessage && { required: `${label} is a required` }); selectRef.current = e }}
-       className={cn(styles.inputWrapper, styles.select, {[styles.formError]: errors[label]})}
        disabled={(label === 'Subcategory' && selectedCategory === '') || isActiveSubInput}
+       className={cn(styles.inputWrapper, styles.select, {[styles.formError]: errors[label], [styles.unit]: label === 'Unit'})}
       >
         <option className={styles.keyOption} value={value}>{value}</option>
         <hr />
@@ -78,9 +88,9 @@ export const Select = ({ label, options, register, errors, value, setValue, sele
          value={value}
          onChange={changeSelectValue} 
          ref={register(isShowRequiredErrorMessage && { required: `${label} is a required` })}
-         className={cn(styles.inputWrapper, styles.subInput, {[styles.formError]: errors[label]})}
          placeholder={`New ${label}`}
-         maxLength='18'
+         maxLength={label === 'Unit' ? '3' : '18'}
+         className={cn(styles.inputWrapper, styles.subInput, {[styles.formError]: errors[label], [styles.unit]: label === 'Unit'})}
         />
       </div>
 

@@ -1,8 +1,10 @@
 .group {
   position: relative;
-  display: block;
-  height: 100%;
   margin-bottom: 20px;
+}
+
+.textareaGroup {
+  height: 100%;
 }
 
 .label {
@@ -32,8 +34,16 @@
 
 .textarea {
   height: 100%;
-  padding: 15px;
+  padding: 8px 15px 15px;
   resize: none;
+}
+
+.textarea::placeholder {
+  font-size: .7rem;
+  color: #4289bb;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.4rem;
 }
 
 .select {
@@ -44,6 +54,17 @@
   background-position-x: 320px;
   background-position-y: 30px;
   background-size: 14px;
+}
+
+.unit {
+  width: 100px;
+  background-position-x: 70px;
+  background-position-y: 30px;
+}
+
+.size {
+  width: 230px;
+  margin-right: 20px;
 }
 
 .iconWrapper {

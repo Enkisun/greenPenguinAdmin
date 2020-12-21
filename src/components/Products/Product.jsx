@@ -4,13 +4,13 @@ import CreateProduct from './CreateProduct';
 import styles from "./product.module.css";
 import defaultImage from "../../assets/defaultImage.svg";
 
-const Product = ({ product, productsCount, currentPage, limit, categoryFilter, subcategoryFilter, trademarkFilter, request, dispatch }) => {
+const Product = ({ product, productsCount, currentPage, limit, categoryFilter, subcategoryFilter, trademarkFilter, dispatch }) => {
 
   const [modal, setModal] = useState(false);
 
   const deleteHandler = async (id) => {
     try {
-      await request('/api/products', 'DELETE', { id });
+      await fetch(`/api/products?id=${id}`, {method: 'DELETE'});
       dispatch(setCurrentPage(currentPage === 1 ? 1 : (productsCount > 1 ? currentPage : currentPage - 1)));
       (productsCount > 1 || (currentPage === 1 && productsCount === 1)) && dispatch(getProductsTC(currentPage, limit, categoryFilter, subcategoryFilter, trademarkFilter));
     } catch (e) {}
