@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCategories } from '../../redux/categoriesReducer'
 import Category from './Category'
-import styles from './categories.module.css'
+import styles from './categoriesList.module.css'
 
 const CategoriesList = () => {
 
@@ -12,9 +12,9 @@ const CategoriesList = () => {
     dispatch(getCategories());
   }, []);
 
-  let categories = useSelector(state => state.categories.categories);
+  const categories = useSelector(state => state.categories.categories);
 
-  const items = categories && categories.map(category => (
+  const items = categories?.map(category => (
     <Category key={category._id} category={category} />
   ));
 

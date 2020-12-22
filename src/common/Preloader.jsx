@@ -1,11 +1,11 @@
 import React from 'react'
 import styles from './preloader.module.css'
-import isFetchingSVG from '../assets/isFetching.svg'
+import fetchingSVG from '../assets/fetching.svg'
 
 const Preloader = () => { 
   return (
     <div className={styles.preloaderWrapper}>
-      <img src={isFetchingSVG} alt='preloader' className={styles.preloaderImage} />
+      <img src={fetchingSVG} alt='preloader' className={styles.preloaderImage} />
     </div>
   )
 };

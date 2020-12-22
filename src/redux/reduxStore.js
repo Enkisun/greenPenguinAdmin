@@ -4,13 +4,13 @@ import categoriesReducer from './categoriesReducer'
 import productsReducer from './productsReducer'
 import trademarksReducer from './trademarksReducer'
 
-let reducers = combineReducers({
+const reducers = combineReducers({
   trademarks: trademarksReducer,
   categories: categoriesReducer,
   products: productsReducer,
 });
 
-let store = createStore(reducers, applyMiddleware(thunkMiddleware));
+const store = createStore(reducers, applyMiddleware(thunkMiddleware));
 
 window.store = store;
 

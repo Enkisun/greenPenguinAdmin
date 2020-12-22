@@ -9,10 +9,10 @@ import styles from './trademark.module.css';
 const trademark = ({ trademark }) => {
 
   const dispatch = useDispatch();
-  let { loading } = useSelector(state => state).products;
-  let { trademarkFilter } = useSelector(state => state).trademarks;
+  const { loading } = useSelector(state => state).products;
+  const { trademarkFilter } = useSelector(state => state).trademarks;
 
-  let isFilter = trademarkFilter.find(filter => filter === trademark);
+  const isFilter = trademarkFilter.find(filter => filter === trademark);
 
   const setFilter = useCallback(() => {
     if (loading) return

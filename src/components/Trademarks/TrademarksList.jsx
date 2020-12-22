@@ -7,7 +7,7 @@ import styles from './TrademarksList.module.css';
 const TrademarksList = () => {
 
   const dispatch = useDispatch();
-  let trademarks = useSelector(state => state.trademarks.trademarks);
+  const trademarks = useSelector(state => state.trademarks.trademarks);
 
   useEffect(() => {
     dispatch(getTrademarks());

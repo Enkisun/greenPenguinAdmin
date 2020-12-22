@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getProductsTC, setCurrentPage } from '../../redux/productsReducer'
+import { getProducts, setCurrentPage } from '../../redux/productsReducer'
 import Paginate from '../../common/Paginate'
 import Preloader from '../../common/Preloader'
 import CreateProduct from './CreateProduct'
@@ -12,31 +12,29 @@ const ProductsList = () => {
   const [modal, setModal] = useState(false);
 
   const dispatch = useDispatch();
-  let { products, currentPage, limit, loading } = useSelector(state => state.products);
-  let { categoryFilter, subcategoryFilter,  } = useSelector(state => state.categories);
-  let trademarkFilter = useSelector(state => state.trademarks.trademarkFilter);
+  const { products, currentPage, limit, loading } = useSelector(state => state.products);
+  const { categoryFilter, subcategoryFilter,  } = useSelector(state => state.categories);
+  const trademarkFilter = useSelector(state => state.trademarks.trademarkFilter);
 
   useEffect(() => {
-    dispatch(getProductsTC(currentPage, limit, categoryFilter, subcategoryFilter, trademarkFilter))
+    dispatch(getProducts(currentPage, limit, categoryFilter, subcategoryFilter, trademarkFilter))
   }, [currentPage, categoryFilter, subcategoryFilter, trademarkFilter]);
 
-  const onPageChanged = newCurrentPage => {
-    if (!loading) {
-      dispatch(setCurrentPage(newCurrentPage, limit));
-    }
+  const deleteProductHandler = async (id) => {
+    try {
+      await fetch(`/products?id=${id}`, {method: 'DELETE'});
+    } catch (e) {}
+
+    dispatch(setCurrentPage((currentPage === 1 || products.length > 1) ? currentPage : currentPage - 1));
+    dispatch(getProducts(currentPage, limit, categoryFilter, subcategoryFilter, trademarkFilter));
   }
 
-  const results = products && products.map(product => (
-    <Product key={product._id}
-     product={product}
-     productsCount={products.length}
-     currentPage={currentPage}
-     limit={limit}
-     categoryFilter={categoryFilter}
-     subcategoryFilter={subcategoryFilter}
-     trademarkFilter={trademarkFilter}
-     dispatch={dispatch}
-    />
+  const onPageChanged = newCurrentPage => {
+    dispatch(setCurrentPage(newCurrentPage, limit));
+  }
+
+  const results = products?.map(product => (
+    <Product key={product._id} product={product} deleteProductHandler={deleteProductHandler} />
   ));
 
   return (
@@ -59,12 +57,12 @@ const ProductsList = () => {
           </tr>
 
           {loading && <Preloader />}
-
-          {results.length > 0 ? results : <p className={styles.emptyList}>Результатов нет</p>}
+          {results.length > 0 && results}
+          {(!loading && results.length === 0) && <p className={styles.emptyList}>Товаров нет</p>}
         </tbody>
       </table>
 
-      <Paginate currentPage={currentPage} pageSize={limit} onPageChanged={onPageChanged} />
+      <Paginate currentPage={currentPage} pageSize={limit} onPageChanged={!loading && onPageChanged} />
     </div>
   )
 };

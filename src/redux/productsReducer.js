@@ -50,7 +50,7 @@ const setLoading = bool => ({ type: SET_LOADING, bool });
 const setTotalProductsCount = totalProductsCount => ({ type: SET_TOTAL_PRODUCTS_COUNT, totalProductsCount });
 export const setCurrentPage = currentPage => ({ type: SET_CURRENT_PAGE, currentPage });
 
-export const getProductsTC = (currentPage, limit, category = '', subcategory = '', trademark = '') => async dispatch => {
+export const getProducts = (currentPage, limit, category = '', subcategory = '', trademark = '') => async dispatch => {
   await dispatch(setLoading(true));
   await dispatch(deleteProducts());
   

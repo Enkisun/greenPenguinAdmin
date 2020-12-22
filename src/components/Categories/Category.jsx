@@ -8,8 +8,8 @@ import styles from './category.module.css';
 const Category = ({ category }) => {
 
   const dispatch = useDispatch();
-  let { categoryFilter, subcategoryFilter } = useSelector(state => state).categories;
-  let loading = useSelector(state => state.products.loading);
+  const { categoryFilter, subcategoryFilter } = useSelector(state => state).categories;
+  const loading = useSelector(state => state.products.loading);
 
   const setFilter = (category, subcategory) => {
     if (!loading) {
@@ -19,8 +19,8 @@ const Category = ({ category }) => {
     }
   };
 
-  const items = category.subcategory.length && category.subcategory.map(subcategory => (
-    <li key={subcategory} className={cn(styles.subcategory, 'browser-default', {[styles.subcategoryActive]: subcategoryFilter === subcategory})}
+  const items = category.subcategory.length > 0 && category.subcategory.map(subcategory => (
+    <li key={subcategory} className={cn(styles.subcategory, {[styles.subcategoryActive]: subcategoryFilter === subcategory})}
      onClick={() => setFilter(category.category, subcategory)}>
       {subcategory}
     </li>
