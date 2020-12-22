@@ -21,8 +21,9 @@ const ProductsList = () => {
   }, [currentPage, categoryFilter, subcategoryFilter, trademarkFilter]);
 
   const onPageChanged = newCurrentPage => {
-    if (loading) return
-    dispatch(setCurrentPage(newCurrentPage, limit));
+    if (!loading) {
+      dispatch(setCurrentPage(newCurrentPage, limit));
+    }
   }
 
   const results = products && products.map(product => (
@@ -38,29 +39,28 @@ const ProductsList = () => {
     />
   ));
 
-  const items = results.length > 0 ? results : <p className={styles.emptyList}>Результатов нет</p>
-
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <CreateProduct modal={modal} setModal={setModal} />
         <h1 className={styles.headerTitle}>Products List</h1>
-        <a href='#' className={styles.logout}>logout</a>
+        <CreateProduct modal={modal} setModal={setModal} />
       </header>
 
       <table className={styles.table}>
         <tbody>
           <tr className={styles.tableTr}>
             <th className={styles.tableTh}>Image</th>
-            <th className={styles.tableTh}>Name</th>
             <th className={styles.tableTh}>Category / Subcategory</th>
             <th className={styles.tableTh}>Trademark</th>
+            <th className={styles.tableTh}>Name</th>
             <th className={styles.tableTh}>Volume / Weight</th>
             <th className={styles.tableTh}>Price</th>
             <th className={styles.tableTh}>Actions</th>
           </tr>
 
-          {loading ? <Preloader /> : items}
+          {loading && <Preloader />}
+
+          {results.length > 0 ? results : <p className={styles.emptyList}>Результатов нет</p>}
         </tbody>
       </table>
 

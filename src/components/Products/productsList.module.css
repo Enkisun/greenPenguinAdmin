@@ -8,26 +8,10 @@
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   height: 100px;
   padding: 0 25px;
   color: #121112;
-}
-
-.logout {
-  border: none;
-  background-color: #fff;
-  color: #bb4253;
-  font-size: .9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: font-size .1s;
-  text-transform: uppercase;
-  font-family: inherit;
-}
-
-.logout:hover {
-  font-size: 1rem;
 }
 
 .headerTitle {

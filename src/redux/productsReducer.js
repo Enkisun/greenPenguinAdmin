@@ -1,4 +1,4 @@
-const ADD_PRODUCT = "ADD_PRODUCT";
+const ADD_PRODUCTS = "ADD_PRODUCTS";
 const DELETE_PRODUCTS = "DELETE_PRODUCTS";
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const SET_TOTAL_PRODUCTS_COUNT = "SET_TOTAL_PRODUCTS_COUNT";
@@ -14,10 +14,10 @@ let initialState = {
 
 const productsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_PRODUCT:
+    case ADD_PRODUCTS:
       return {
         ...state,
-        products: [...state.products, action.product],
+        products: action.products,
       };
     case DELETE_PRODUCTS:
       return {
@@ -44,38 +44,23 @@ const productsReducer = (state = initialState, action) => {
   }
 }
 
-export const addProduct = product => ({ type: ADD_PRODUCT, product });
-export const deleteProducts = () => ({ type: DELETE_PRODUCTS })
-export const setCurrentPage = currentPage => ({ type: SET_CURRENT_PAGE, currentPage });
+const addProducts = products => ({ type: ADD_PRODUCTS, products });
+const deleteProducts = () => ({ type: DELETE_PRODUCTS })
+const setLoading = bool => ({ type: SET_LOADING, bool });
 const setTotalProductsCount = totalProductsCount => ({ type: SET_TOTAL_PRODUCTS_COUNT, totalProductsCount });
-export const setLoading = bool => ({ type: SET_LOADING, bool });
-
-const arrayBufferToBase64 = buffer => {
-  let binary = '';
-  let bytes = [].slice.call(new Uint8Array(buffer));
-  bytes.forEach(b => binary += String.fromCharCode(b));
-  return window.btoa(binary);
-};
+export const setCurrentPage = currentPage => ({ type: SET_CURRENT_PAGE, currentPage });
 
 export const getProductsTC = (currentPage, limit, category = '', subcategory = '', trademark = '') => async dispatch => {
   await dispatch(setLoading(true));
   await dispatch(deleteProducts());
-  const response = await fetch(`/api/products?page=${currentPage}&limit=${limit}&category=${category}&subcategory=${subcategory}&trademark=${trademark}`);
+  
+  const response = await fetch(`/products?page=${currentPage}&limit=${limit}&category=${category}&subcategory=${subcategory}&trademark=${trademark}`);
   if (!response.ok) throw Error(response.statusText);
   const json = await response.json();
 
   if (json) {
     await dispatch(setTotalProductsCount(json.totalProductsCount.totalProductsCount));
-    await Promise.all(json.products.map(async product => {
-
-      if (product.image) {
-        const base64Flag = `data:${product.image.contentType};base64,`;
-        const imageStr = arrayBufferToBase64(product.image.data.data);
-        product.image = {src: base64Flag + imageStr, name: product.image.name};
-      }
-
-      await dispatch(addProduct(product));
-    }));
+    await dispatch(addProducts(json.products));
   }
   dispatch(setLoading(false));
 };

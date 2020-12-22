@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilters } from '../../redux/categoriesReducer';
+import { setCategoryFilter, setSubcategoryFilter } from '../../redux/categoriesReducer';
 import { setCurrentPage } from '../../redux/productsReducer';
 import cn from 'classnames';
 import styles from './category.module.css';
@@ -12,9 +12,11 @@ const Category = ({ category }) => {
   let loading = useSelector(state => state.products.loading);
 
   const setFilter = (category, subcategory) => {
-    if (loading) return
-    dispatch(setFilters(category, subcategory, categoryFilter))
-    dispatch(setCurrentPage(1));
+    if (!loading) {
+      dispatch(setCategoryFilter(category));
+      dispatch(setSubcategoryFilter(categoryFilter === category ? subcategory : ''));
+      dispatch(setCurrentPage(1));
+    }
   };
 
   const items = category.subcategory.length && category.subcategory.map(subcategory => (

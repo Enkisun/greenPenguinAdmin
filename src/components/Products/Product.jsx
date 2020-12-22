@@ -10,7 +10,7 @@ const Product = ({ product, productsCount, currentPage, limit, categoryFilter, s
 
   const deleteHandler = async (id) => {
     try {
-      await fetch(`/api/products?id=${id}`, {method: 'DELETE'});
+      await fetch(`/products?id=${id}`, {method: 'DELETE'});
       dispatch(setCurrentPage(currentPage === 1 ? 1 : (productsCount > 1 ? currentPage : currentPage - 1)));
       (productsCount > 1 || (currentPage === 1 && productsCount === 1)) && dispatch(getProductsTC(currentPage, limit, categoryFilter, subcategoryFilter, trademarkFilter));
     } catch (e) {}
@@ -19,12 +19,12 @@ const Product = ({ product, productsCount, currentPage, limit, categoryFilter, s
   return (
     <tr className={styles.tableTr}>
       <td className={styles.tableTd}>
-        <img className={styles.productImage} src={product.image ? product.image.src : defaultImage} alt="productImage" />
+        <img className={styles.productImage} src={product.image || defaultImage} alt="productImage" />
       </td>
-      <td className={styles.tableTd}>{product.name}</td>
       <td className={styles.tableTd}>{product.category}{product.subcategory && ` / ${product.subcategory}`}</td>
       <td className={styles.tableTd}>{product.trademark}</td>
-      <td className={styles.tableTd}>{product.volume ? `${product.volume} мл` : `${product.weight} гр`}</td>
+      <td className={styles.tableTd}>{product.name}</td>
+      <td className={styles.tableTd}>{product.size} {product.unit}</td>
       <td className={styles.tableTd}>{product.price} руб</td>
       <td className={styles.tableTd}>
         <div className={styles.btnWrapper}>

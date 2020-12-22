@@ -1,4 +1,4 @@
-const ADD_TRADEMARK = "ADD_TRADEMARK";
+const ADD_TRADEMARKS = "ADD_TRADEMARKS";
 const DELETE_TRADEMARKS = "DELETE_TRADEMARKS";
 const ADD_TRADEMARK_FILTER = "ADD_TRADEMARK_FILTER";
 const REMOVE_TRADEMARK_FILTER = "REMOVE_TRADEMARK_FILTER";
@@ -10,10 +10,10 @@ let initialState = {
 
 const trademarksReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_TRADEMARK:
+    case ADD_TRADEMARKS:
       return {
         ...state,
-        trademarks: [...state.trademarks, action.trademark],
+        trademarks: action.trademarks,
       };
     case DELETE_TRADEMARKS:
       return {
@@ -37,20 +37,20 @@ const trademarksReducer = (state = initialState, action) => {
   }
 }
 
+const addTrademarks = trademarks => ({ type: ADD_TRADEMARKS, trademarks });
+const deleteTrademarks = () => ({ type: DELETE_TRADEMARKS });
 export const addTrademarkFilter = trademark => ({ type: ADD_TRADEMARK_FILTER, trademark });
 export const removeTrademarkFilter = trademark => ({ type: REMOVE_TRADEMARK_FILTER, trademark });
-export const addTrademark = trademark => ({ type: ADD_TRADEMARK, trademark });
-const deleteTrademarks = () => ({ type: DELETE_TRADEMARKS })
 
-export const getTrademarksTC = () => async dispatch => {
+export const getTrademarks = () => async dispatch => {
   await dispatch(deleteTrademarks());
 
-  const response = await fetch(`/api/trademarks`);
+  const response = await fetch(`/trademarks`);
   if (!response.ok) throw Error(response.statusText);
   const json = await response.json();
 
   if (json) {
-    await Promise.all(json.trademarks.map(async trademark => await dispatch(addTrademark(trademark)) ));
+    await dispatch(addTrademarks(json.trademarks));
   }
 };
 

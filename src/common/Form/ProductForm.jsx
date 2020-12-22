@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
-import { getCategoriesTC } from '../../redux/categoriesReducer'
-import { getTrademarksTC } from '../../redux/trademarksReducer'
+import { getCategories } from '../../redux/categoriesReducer'
+import { getTrademarks } from '../../redux/trademarksReducer'
 import { getProductsTC } from '../../redux/productsReducer'
 import { Input, Textarea, Select } from './ProductFormControls'
 import cn from 'classnames'
@@ -62,15 +62,15 @@ export const ProductForm = ({ modal, setModal, product }) => {
     formData.append("image", data.imageSrc[0]);
 
     try {
-      await fetch(`api/categories?category=${data.Category}&subcategory=${data.Subcategory}`, {method: 'POST'});
-      await fetch(`api/trademarks?trademark=${data.Trademark}`, {method: 'POST'});
-      await fetch('api/products', {method: product ? 'PUT' : 'POST', body: formData});
+      await fetch(`/categories?category=${data.Category}&subcategory=${data.Subcategory}`, {method: 'POST'});
+      await fetch(`/trademarks?trademark=${data.Trademark}`, {method: 'POST'});
+      await fetch('/products', {method: product ? 'PUT' : 'POST', body: formData});
     } catch (e) {
       console.log(e.message);
     }
 
-    dispatch(getCategoriesTC());
-    dispatch(getTrademarksTC());
+    dispatch(getCategories());
+    dispatch(getTrademarks());
     dispatch(getProductsTC(currentPage, limit, categoryFilter, subcategoryFilter, trademarkFilter));
   }
 

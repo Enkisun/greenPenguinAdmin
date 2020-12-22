@@ -1,6 +1,6 @@
 const SET_CATEGORY_FILTER = "SET_CATEGORY_FILTER";
 const SET_SUBCATEGORY_FILTER = "SET_SUBCATEGORY_FILTER";
-const ADD_CATEGORY = "ADD_CATEGORY";
+const ADD_CATEGORIES = "ADD_CATEGORIES";
 const DELETE_CATEGORIES = "DELETE_CATEGORIES";
 
 let initialState = {
@@ -11,10 +11,10 @@ let initialState = {
 
 const categoriesReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_CATEGORY:
+    case ADD_CATEGORIES:
       return {
         ...state,
-        categories: [...state.categories, action.category],
+        categories: action.categories,
       };
     case DELETE_CATEGORIES:
       return {
@@ -36,25 +36,20 @@ const categoriesReducer = (state = initialState, action) => {
   }
 }
 
-const setCategoryFilter = category => ({ type: SET_CATEGORY_FILTER, category });
-const setSubcategoryFilter = subcategory => ({ type: SET_SUBCATEGORY_FILTER, subcategory });
-export const addCategory = category => ({ type: ADD_CATEGORY, category });
-const deleteCategories = () => ({ type: DELETE_CATEGORIES })
+const addCategories = categories => ({ type: ADD_CATEGORIES, categories });
+const deleteCategories = () => ({ type: DELETE_CATEGORIES });
+export const setCategoryFilter = category => ({ type: SET_CATEGORY_FILTER, category });
+export const setSubcategoryFilter = subcategory => ({ type: SET_SUBCATEGORY_FILTER, subcategory });
 
-export const setFilters = (category, subcategory = '', categoryFilter) => async dispatch => {
-  dispatch(setCategoryFilter(category));
-  dispatch(setSubcategoryFilter(categoryFilter === category ? subcategory : ''));
-}
-
-export const getCategoriesTC = () => async dispatch => {
+export const getCategories = () => async dispatch => {
   await dispatch(deleteCategories());
 
-  const response = await fetch(`/api/categories`);
+  const response = await fetch(`/categories`);
   if (!response.ok) throw Error(response.statusText);
   const json = await response.json();
 
   if (json) {
-    await Promise.all(json.categories.map(async category => await dispatch(addCategory(category)) ));
+    await dispatch(addCategories(json.categories));
   }
 };
 

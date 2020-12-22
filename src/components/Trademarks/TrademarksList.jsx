@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTrademarksTC } from '../../redux/trademarksReducer';
+import { getTrademarks } from '../../redux/trademarksReducer';
 import Trademark from './Trademark';
 import styles from './TrademarksList.module.css';
 
@@ -10,7 +10,7 @@ const TrademarksList = () => {
   let trademarks = useSelector(state => state.trademarks.trademarks);
 
   useEffect(() => {
-    dispatch(getTrademarksTC());
+    dispatch(getTrademarks());
   }, []);
 
   const items = trademarks && trademarks.map(trademark => (

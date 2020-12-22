@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCategoriesTC } from '../../redux/categoriesReducer'
+import { getCategories } from '../../redux/categoriesReducer'
 import Category from './Category'
 import styles from './categories.module.css'
 
@@ -9,7 +9,7 @@ const CategoriesList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCategoriesTC());
+    dispatch(getCategories());
   }, []);
 
   let categories = useSelector(state => state.categories.categories);
