@@ -53,15 +53,33 @@ export const setCurrentPage = currentPage => ({ type: SET_CURRENT_PAGE, currentP
 export const getProducts = (currentPage, limit, category = '', subcategory = '', trademark = '') => async dispatch => {
   await dispatch(setLoading(true));
   await dispatch(deleteProducts());
-  
-  const response = await fetch(`/products?page=${currentPage}&limit=${limit}&category=${category}&subcategory=${subcategory}&trademark=${trademark}`);
-  if (!response.ok) throw Error(response.statusText);
-  const json = await response.json();
 
-  if (json) {
-    await dispatch(setTotalProductsCount(json.totalProductsCount.totalProductsCount));
-    await dispatch(addProducts(json.products));
+  let productsURI = `/products?page=${currentPage}&limit=${limit}`;
+
+  if (category) {
+    productsURI += `&category=${category}`;
   }
+
+  if (subcategory) {
+    productsURI += `&subcategory=${subcategory}`;
+  }
+
+  if (trademark.length) {
+    productsURI += `&trademark=${trademark}`;
+  }
+  
+  try {
+    const response = await fetch(productsURI);
+    const json = await response.json();
+
+    if (json) {
+      await dispatch(setTotalProductsCount(json.totalProductsCount.totalProductsCount));
+      await dispatch(addProducts(json.products));
+    }
+  } catch (e) {
+    console.log(e.message);
+  }
+
   dispatch(setLoading(false));
 };
 

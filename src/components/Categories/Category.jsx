@@ -8,7 +8,7 @@ import styles from './category.module.css';
 const Category = ({ category }) => {
 
   const dispatch = useDispatch();
-  const { categoryFilter, subcategoryFilter } = useSelector(state => state).categories;
+  const { categoryFilter, subcategoryFilter } = useSelector(state => state.categories);
   const loading = useSelector(state => state.products.loading);
 
   const setFilter = (category, subcategory) => {
@@ -19,22 +19,22 @@ const Category = ({ category }) => {
     }
   };
 
-  const items = category.subcategory.length > 0 && category.subcategory.map(subcategory => (
-    <li key={subcategory} className={cn(styles.subcategory, {[styles.subcategoryActive]: subcategoryFilter === subcategory})}
-     onClick={() => setFilter(category.category, subcategory)}>
-      {subcategory}
-    </li>
-  ));
-
   return (
     <li>
-      <p className={cn(styles.categoryTitle, {[styles.categoryTitleActive]: categoryFilter === category.category})}
+      <button className={cn(styles.categoryTitle, {[styles.categoryTitleActive]: categoryFilter === category.category})}
        onClick={() => setFilter(category.category)}>
         {category.category}
-      </p>
+      </button>
 
-      <ul className={cn(styles.subcategories, 'browser-default', {[styles.subcategoriesActive]: (categoryFilter === category.category && items)})}>
-        {items}
+      <ul className={cn(styles.subcategories, {[styles.subcategoriesActive]: (category.subcategory.length > 0 && categoryFilter === category.category)})}>
+        { category.subcategory?.map(subcategory => (
+          <li key={subcategory}>
+            <button className={cn(styles.subcategory, {[styles.subcategoryActive]: subcategoryFilter === subcategory})}
+             onClick={() => setFilter(category.category, subcategory)}>
+              {subcategory}
+            </button>
+          </li>
+        ))}
       </ul>
     </li>
   )

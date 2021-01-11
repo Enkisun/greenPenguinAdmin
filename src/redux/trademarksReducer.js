@@ -45,12 +45,15 @@ export const removeTrademarkFilter = trademark => ({ type: REMOVE_TRADEMARK_FILT
 export const getTrademarks = () => async dispatch => {
   await dispatch(deleteTrademarks());
 
-  const response = await fetch(`/trademarks`);
-  if (!response.ok) throw Error(response.statusText);
-  const json = await response.json();
+  try {
+    const response = await fetch(`/trademarks`);
+    const json = await response.json();
 
-  if (json) {
-    await dispatch(addTrademarks(json.trademarks));
+    if (json) {
+      await dispatch(addTrademarks(json.trademarks));
+    }
+  } catch (e) {
+    console.log(e.message);
   }
 };
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import CreateProduct from './CreateProduct'
+import { ProductForm } from '../../common/Form/ProductForm'
+import cn from 'classnames'
 import styles from './product.module.css'
 import defaultImage from '../../assets/defaultImage.svg'
 
@@ -17,11 +18,11 @@ const Product = ({ product, deleteProductHandler }) => {
       <td className={styles.tableTd}>{product.name}</td>
       <td className={styles.tableTd}>{product.size} {product.unit}</td>
       <td className={styles.tableTd}>{product.price} руб</td>
-      <td className={styles.tableTd}>
-        <div className={styles.btnWrapper}>
-          <CreateProduct modal={modal} setModal={setModal} product={product} />
-          <button className={`${styles.btn} ${styles.deleteBtn}`} onClick={() => deleteProductHandler(product._id)}>Delete</button>
-        </div>
+      <td className={cn(styles.tableTd, styles.btnWrapper)}>
+        <button className={cn(styles.btn, {[styles.editBtn]: product})} onClick={() => setModal(true)}>Edit</button>
+        <button className={cn(styles.btn, styles.deleteBtn)} onClick={() => deleteProductHandler(product._id)}>Delete</button>
+
+        { modal && <ProductForm modal={modal} setModal={setModal} product={product} /> }
       </td>
     </tr>
   )

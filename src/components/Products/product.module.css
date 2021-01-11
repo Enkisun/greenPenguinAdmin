@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: space-between;
   border-bottom: none;
+  padding: 0 25px;
 }
 
 .tableTd {
@@ -38,6 +39,10 @@
   transition: font-size .1s;
   text-transform: uppercase;
   font-family: inherit;
+}
+
+.editBtn {
+  color: #4289bb;
 }
 
 .btn:hover {

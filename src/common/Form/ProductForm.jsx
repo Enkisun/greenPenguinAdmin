@@ -61,33 +61,46 @@ export const ProductForm = ({ modal, setModal, product }) => {
     formData.append("description", data.Description);
     formData.append("image", data.imageSrc[0]);
 
-    try {
-      await fetch(`/categories?category=${data.Category}&subcategory=${data.Subcategory}`, {method: 'POST'});
-      await fetch(`/trademarks?trademark=${data.Trademark}`, {method: 'POST'});
-      await fetch('/products', {method: product ? 'PUT' : 'POST', body: formData});
-    } catch (e) {}
+    let categoryURI = `/categories?category=${data.Category}`;
+    
+    if (data.Subcategory) {
+      categoryURI += `&subcategory=${data.Subcategory}`;
+    }
 
-    dispatch(getCategories());
-    dispatch(getTrademarks());
-    dispatch(getProducts(currentPage, limit, categoryFilter, subcategoryFilter, trademarkFilter));
+    try {
+      await fetch(categoryURI, {method: 'POST'});
+      dispatch(getCategories());
+
+      await fetch(`/trademarks?trademark=${data.Trademark}`, {method: 'POST'});
+      dispatch(getTrademarks());
+
+      await fetch('/products', {method: product ? 'PUT' : 'POST', body: formData});
+      dispatch(getProducts(currentPage, limit, categoryFilter, subcategoryFilter, trademarkFilter));
+    } catch (e) {
+      console.log(e.message);
+    }
   }
 
   const categoryOptions = categories?.map(category => 
     <option value={category.category} key={category._id}>{category.category}</option>
   );
+
   const currentCategory = categories?.filter(category => {
     if (category.category === Category) return category 
   });
+
   const subcategoryOptions = currentCategory[0]?.subcategory.map(subcategory => 
     <option value={subcategory} key={subcategory}>{subcategory}</option>
   );
+
   const trademarkOptions = trademarks?.map(trademark =>
     <option value={trademark.trademark} key={trademark._id}>{trademark.trademark}</option>
   );
+
   const unitOptions = (
     <>
-      <option value='мг'>мг</option>
-      <option value='гр'>гр</option>
+      <option value='mg'>мг</option>
+      <option value='gr'>гр</option>
     </>
   )
 

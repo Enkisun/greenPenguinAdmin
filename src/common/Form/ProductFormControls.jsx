@@ -95,7 +95,7 @@ export const Select = ({ label, options, register, errors, value, setValue, sele
       </div>
 
       <button className={styles.iconWrapper} onClick={() => setActiveSubInput(false)} type='button'>
-        <CheckIcon className={cn({[styles.disabled]: !isActiveSubInput})} />
+        <CheckIcon className={cn(styles.checkIcon, {[styles.disabled]: !isActiveSubInput})} />
       </button>
 
       <span className={styles.spanError}>{errors[label]?.message}</span>

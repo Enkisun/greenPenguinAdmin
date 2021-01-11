@@ -79,6 +79,10 @@
   cursor: pointer;
 }
 
+.checkIcon {
+  color: #5f9e52;
+}
+
 .subInput {
   border: none;
   border-bottom: 2px solid #4289bb;

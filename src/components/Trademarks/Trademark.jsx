@@ -9,8 +9,8 @@ import styles from './trademark.module.css';
 const trademark = ({ trademark }) => {
 
   const dispatch = useDispatch();
-  const { loading } = useSelector(state => state).products;
-  const { trademarkFilter } = useSelector(state => state).trademarks;
+  const { loading } = useSelector(state => state.products);
+  const { trademarkFilter } = useSelector(state => state.trademarks);
 
   const isFilter = trademarkFilter.find(filter => filter === trademark);
 
@@ -21,9 +21,11 @@ const trademark = ({ trademark }) => {
   }, [loading]);
 
   return (
-    <li className={cn(styles.trademark, {[styles.trademarkActive]: isFilter})} onClick={setFilter}>
-      <CheckIcon className={cn(styles.check, {[styles.checkActive]: isFilter})} />
-      <p className={styles.trademarkTitle}>{trademark}</p>
+    <li>
+      <button className={cn(styles.trademark, {[styles.trademarkActive]: isFilter})} onClick={setFilter}>
+        <CheckIcon className={cn(styles.check, {[styles.checkActive]: isFilter})} />
+        <p className={styles.trademarkTitle}>{trademark}</p>
+      </button>
     </li>
   )
 }

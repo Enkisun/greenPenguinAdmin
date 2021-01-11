@@ -14,15 +14,11 @@ const CategoriesList = () => {
 
   const categories = useSelector(state => state.categories.categories);
 
-  const items = categories?.map(category => (
-    <Category key={category._id} category={category} />
-  ));
-
   return (
     <div className={styles.container}>
       <h3 className={styles.categoriesListTitle}>Categories List</h3>
       <ul className={styles.categoriesList}>
-        {items}
+        { categories?.map(category => <Category key={category._id} category={category} />) }
       </ul>
     </div>
   )

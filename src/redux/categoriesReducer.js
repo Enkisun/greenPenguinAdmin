@@ -44,12 +44,15 @@ export const setSubcategoryFilter = subcategory => ({ type: SET_SUBCATEGORY_FILT
 export const getCategories = () => async dispatch => {
   await dispatch(deleteCategories());
 
-  const response = await fetch(`/categories`);
-  if (!response.ok) throw Error(response.statusText);
-  const json = await response.json();
+  try {
+    const response = await fetch(`/categories`);
+    const json = await response.json();
 
-  if (json) {
-    await dispatch(addCategories(json.categories));
+    if (json) {
+      await dispatch(addCategories(json.categories));
+    }
+  } catch(e) {
+    console.log(e.message);
   }
 };
 
