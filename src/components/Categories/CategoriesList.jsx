@@ -12,7 +12,7 @@ const CategoriesList = () => {
     dispatch(getCategories());
   }, []);
 
-  const categories = useSelector(state => state.categories.categories);
+  const categories = useSelector(state => state.categories.categoriesData);
 
   return (
     <div className={styles.container}>

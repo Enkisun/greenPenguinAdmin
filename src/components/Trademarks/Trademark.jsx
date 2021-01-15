@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTrademarkFilter, removeTrademarkFilter } from '../../redux/trademarksReducer';
+import { addTrademarkFilter, removeTrademarkFilter } from '../../redux/categoriesReducer';
 import { setCurrentPage } from '../../redux/productsReducer';
 import {ReactComponent as CheckIcon} from '../../assets/check.svg';
 import cn from 'classnames';
@@ -9,8 +9,8 @@ import styles from './trademark.module.css';
 const trademark = ({ trademark }) => {
 
   const dispatch = useDispatch();
-  const { loading } = useSelector(state => state.products);
-  const { trademarkFilter } = useSelector(state => state.trademarks);
+  const loading = useSelector(state => state.products.loading);
+  const trademarkFilter = useSelector(state => state.categories.trademarkFilter);
 
   const isFilter = trademarkFilter.find(filter => filter === trademark);
 

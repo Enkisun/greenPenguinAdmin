@@ -1,12 +1,16 @@
 const SET_CATEGORY_FILTER = "SET_CATEGORY_FILTER";
 const SET_SUBCATEGORY_FILTER = "SET_SUBCATEGORY_FILTER";
+const ADD_TRADEMARK_FILTER = "ADD_TRADEMARK_FILTER";
+const REMOVE_TRADEMARK_FILTER = "REMOVE_TRADEMARK_FILTER";
+const REMOVE_TRADEMARK_FILTERS = "REMOVE_TRADEMARK_FILTERS";
 const ADD_CATEGORIES = "ADD_CATEGORIES";
 const DELETE_CATEGORIES = "DELETE_CATEGORIES";
 
 let initialState = {
-  categories: [],
+  categoriesData: [],
   categoryFilter: '',
   subcategoryFilter: '',
+  trademarkFilter: [],
 }
 
 const categoriesReducer = (state = initialState, action) => {
@@ -14,12 +18,12 @@ const categoriesReducer = (state = initialState, action) => {
     case ADD_CATEGORIES:
       return {
         ...state,
-        categories: action.categories,
+        categoriesData: action.categories,
       };
     case DELETE_CATEGORIES:
       return {
         ...state,
-        categories: [],
+        categoriesData: [],
       };
     case SET_CATEGORY_FILTER:
       return {
@@ -31,6 +35,23 @@ const categoriesReducer = (state = initialState, action) => {
         ...state,
         subcategoryFilter: action.subcategory,
       }
+    case ADD_TRADEMARK_FILTER:
+      return {
+        ...state,
+        trademarkFilter: [...state.trademarkFilter, action.trademark],
+      };
+    case REMOVE_TRADEMARK_FILTER:
+      return {
+        ...state,
+        trademarkFilter: state.trademarkFilter.filter(trademark => {
+          if (trademark !== action.trademark) return trademark;
+        }),
+      };
+    case REMOVE_TRADEMARK_FILTERS:
+      return {
+        ...state,
+        trademarkFilter: [],
+      }
     default:
       return state;
   }
@@ -40,6 +61,9 @@ const addCategories = categories => ({ type: ADD_CATEGORIES, categories });
 const deleteCategories = () => ({ type: DELETE_CATEGORIES });
 export const setCategoryFilter = category => ({ type: SET_CATEGORY_FILTER, category });
 export const setSubcategoryFilter = subcategory => ({ type: SET_SUBCATEGORY_FILTER, subcategory });
+export const addTrademarkFilter = trademark => ({ type: ADD_TRADEMARK_FILTER, trademark });
+export const removeTrademarkFilter = trademark => ({ type: REMOVE_TRADEMARK_FILTER, trademark });
+export const removeTrademarkFilters = () => ({ type: REMOVE_TRADEMARK_FILTERS });
 
 export const getCategories = () => async dispatch => {
   await dispatch(deleteCategories());

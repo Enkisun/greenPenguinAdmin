@@ -13,8 +13,7 @@ const ProductsList = () => {
 
   const dispatch = useDispatch();
   const { products, currentPage, limit, loading } = useSelector(state => state.products);
-  const { categoryFilter, subcategoryFilter,  } = useSelector(state => state.categories);
-  const trademarkFilter = useSelector(state => state.trademarks.trademarkFilter);
+  const { categoryFilter, subcategoryFilter, trademarkFilter } = useSelector(state => state.categories);
 
   useEffect(() => {
     dispatch(getProducts(currentPage, limit, categoryFilter, subcategoryFilter, trademarkFilter))

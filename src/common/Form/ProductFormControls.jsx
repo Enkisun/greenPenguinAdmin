@@ -73,7 +73,7 @@ export const Select = ({ label, options, register, errors, value, setValue, sele
        value={value}
        onChange={onChange}
        ref={e => { register(isShowRequiredErrorMessage && { required: `${label} is a required` }); selectRef.current = e }}
-       disabled={(label === 'Subcategory' && selectedCategory === '') || isActiveSubInput}
+       disabled={(label !== 'Category' && selectedCategory === '') || isActiveSubInput}
        className={cn(styles.inputWrapper, styles.select, {[styles.formError]: errors[label], [styles.unit]: label === 'Unit'})}
       >
         <option className={styles.keyOption} value={value}>{value}</option>

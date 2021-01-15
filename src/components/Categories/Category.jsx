@@ -21,17 +21,17 @@ const Category = ({ category }) => {
 
   return (
     <li>
-      <button className={cn(styles.categoryTitle, {[styles.categoryTitleActive]: categoryFilter === category.category})}
-       onClick={() => setFilter(category.category)}>
-        {category.category}
+      <button className={cn(styles.categoryTitle, {[styles.categoryTitleActive]: categoryFilter === category.name})}
+       onClick={() => setFilter(category.name)}>
+        {category.name}
       </button>
 
-      <ul className={cn(styles.subcategories, {[styles.subcategoriesActive]: (category.subcategory.length > 0 && categoryFilter === category.category)})}>
-        { category.subcategory?.map(subcategory => (
-          <li key={subcategory}>
-            <button className={cn(styles.subcategory, {[styles.subcategoryActive]: subcategoryFilter === subcategory})}
-             onClick={() => setFilter(category.category, subcategory)}>
-              {subcategory}
+      <ul className={cn(styles.subcategories, {[styles.subcategoriesActive]: (category.subcategories?.length > 0 && categoryFilter === category.name)})}>
+        { category.subcategories?.map(subcategory => (
+          <li key={subcategory._id}>
+            <button className={cn(styles.subcategory, {[styles.subcategoryActive]: subcategoryFilter === subcategory.name})}
+             onClick={() => setFilter(category.name, subcategory.name)}>
+              {subcategory.name}
             </button>
           </li>
         ))}

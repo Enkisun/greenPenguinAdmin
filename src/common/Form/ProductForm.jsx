@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { getCategories } from '../../redux/categoriesReducer'
-import { getTrademarks } from '../../redux/trademarksReducer'
 import { getProducts } from '../../redux/productsReducer'
 import { Input, Textarea, Select } from './ProductFormControls'
 import cn from 'classnames'
@@ -15,8 +14,7 @@ export const ProductForm = ({ modal, setModal, product }) => {
 
   const dispatch = useDispatch();
   const { currentPage, limit } = useSelector(state => state.products);
-  const { trademarks, trademarkFilter } = useSelector(state => state.trademarks);
-  const { categories, categoryFilter, subcategoryFilter } = useSelector(state => state.categories);
+  const { categoriesData, categoryFilter, subcategoryFilter, trademarkFilter } = useSelector(state => state.categories);
 
   useEffect(() => {
     const onClickOutside = () => {
@@ -61,7 +59,7 @@ export const ProductForm = ({ modal, setModal, product }) => {
     formData.append("description", data.Description);
     formData.append("image", data.imageSrc[0]);
 
-    let categoryURI = `/categories?category=${data.Category}`;
+    let categoryURI = `/categories?category=${data.Category}&trademark=${data.Trademark}`;
     
     if (data.Subcategory) {
       categoryURI += `&subcategory=${data.Subcategory}`;
@@ -71,9 +69,6 @@ export const ProductForm = ({ modal, setModal, product }) => {
       await fetch(categoryURI, {method: 'POST'});
       dispatch(getCategories());
 
-      await fetch(`/trademarks?trademark=${data.Trademark}`, {method: 'POST'});
-      dispatch(getTrademarks());
-
       await fetch('/products', {method: product ? 'PUT' : 'POST', body: formData});
       dispatch(getProducts(currentPage, limit, categoryFilter, subcategoryFilter, trademarkFilter));
     } catch (e) {
@@ -81,20 +76,20 @@ export const ProductForm = ({ modal, setModal, product }) => {
     }
   }
 
-  const categoryOptions = categories?.map(category => 
-    <option value={category.category} key={category._id}>{category.category}</option>
+  const categoryOptions = categoriesData?.map(category => 
+    <option value={category.name} key={category._id}>{category.name}</option>
   );
 
-  const currentCategory = categories?.filter(category => {
-    if (category.category === Category) return category 
+  const currentCategory = categoriesData?.filter(category => {
+    if (category.name === Category) return category 
   });
 
-  const subcategoryOptions = currentCategory[0]?.subcategory.map(subcategory => 
-    <option value={subcategory} key={subcategory}>{subcategory}</option>
+  const subcategoryOptions = currentCategory[0]?.subcategories.map(subcategory => 
+    <option value={subcategory.name} key={subcategory._id}>{subcategory.name}</option>
   );
 
-  const trademarkOptions = trademarks?.map(trademark =>
-    <option value={trademark.trademark} key={trademark._id}>{trademark.trademark}</option>
+  const trademarkOptions = currentCategory[0]?.trademarks?.map(trademark =>
+    <option value={trademark.name} key={trademark._id}>{trademark.name}</option>
   );
 
   const unitOptions = (
@@ -140,6 +135,7 @@ export const ProductForm = ({ modal, setModal, product }) => {
            errors={errors} 
            value={Trademark} 
            setValue={setValue} 
+           selectedCategory={Category}
           />
 
           <Input label='Name' type='text' register={register} errors={errors} required='true' />
