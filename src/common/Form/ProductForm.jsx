@@ -37,7 +37,7 @@ export const ProductForm = ({ modal, setModal, product }) => {
       Trademark: product?.trademark || '',
       Name: product?.name || '',
       Size: product?.size || 0,
-      Unit: product?.unit || '',
+      Unit: product?.unit || unitsData[0]?.name || 'мг',
       Price: product?.price || 0,
       Description: product?.description || '',
     }
