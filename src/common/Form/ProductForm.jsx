@@ -6,6 +6,7 @@ import { getProducts } from '../../redux/productsReducer'
 import { Input, Textarea, Select } from './ProductFormControls'
 import cn from 'classnames'
 import styles from './productForm.module.css'
+import { getUnits } from '../../redux/unitsReducer'
 
 export const ProductForm = ({ modal, setModal, product }) => {
 
@@ -13,8 +14,9 @@ export const ProductForm = ({ modal, setModal, product }) => {
   const [imageText, setImageText] = useState(product?.image?.name);
 
   const dispatch = useDispatch();
-  const { currentPage, limit } = useSelector(state => state.products);
   const { categoriesData, categoryFilter, subcategoryFilter, trademarkFilter } = useSelector(state => state.categories);
+  const { currentPage, limit } = useSelector(state => state.products);
+  const unitsData = useSelector(state => state.units.unitsData);
 
   useEffect(() => {
     const onClickOutside = () => {
@@ -35,7 +37,7 @@ export const ProductForm = ({ modal, setModal, product }) => {
       Trademark: product?.trademark || '',
       Name: product?.name || '',
       Size: product?.size || 0,
-      Unit: product?.unit || 'мг',
+      Unit: product?.unit || '',
       Price: product?.price || 0,
       Description: product?.description || '',
     }
@@ -59,7 +61,7 @@ export const ProductForm = ({ modal, setModal, product }) => {
     formData.append("description", data.Description);
     formData.append("image", data.imageSrc[0]);
 
-    let categoryURI = `/categories?category=${data.Category}&trademark=${data.Trademark}`;
+    let categoryURI = `/categories?trademark=${data.Trademark}&category=${data.Category}`;
     
     if (data.Subcategory) {
       categoryURI += `&subcategory=${data.Subcategory}`;
@@ -68,6 +70,9 @@ export const ProductForm = ({ modal, setModal, product }) => {
     try {
       await fetch(categoryURI, {method: 'POST'});
       dispatch(getCategories());
+
+      await fetch(`/units?unit=${data.Unit}`, {method: 'POST'});
+      dispatch(getUnits());
 
       await fetch('/products', {method: product ? 'PUT' : 'POST', body: formData});
       dispatch(getProducts(currentPage, limit, categoryFilter, subcategoryFilter, trademarkFilter));
@@ -92,12 +97,9 @@ export const ProductForm = ({ modal, setModal, product }) => {
     <option value={trademark.name} key={trademark._id}>{trademark.name}</option>
   );
 
-  const unitOptions = (
-    <>
-      <option value='mg'>мг</option>
-      <option value='gr'>гр</option>
-    </>
-  )
+  const unitOptions = unitsData?.map(unit =>
+    <option value={unit.name} key={unit._id}>{unit.name}</option>
+  );
 
   const onChangeImage = e => {
     setImageText(e.target.files[0].name);

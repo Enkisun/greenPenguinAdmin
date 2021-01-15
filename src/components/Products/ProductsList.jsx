@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProducts, setCurrentPage } from '../../redux/productsReducer'
+import { getUnits } from '../../redux/unitsReducer'
 import { ProductForm } from '../../common/Form/ProductForm'
 import Paginate from '../../common/Paginate'
 import Preloader from '../../common/Preloader'
@@ -14,6 +15,10 @@ const ProductsList = () => {
   const dispatch = useDispatch();
   const { products, currentPage, limit, loading } = useSelector(state => state.products);
   const { categoryFilter, subcategoryFilter, trademarkFilter } = useSelector(state => state.categories);
+
+  useEffect(() => {
+    dispatch(getUnits());
+  }, [])
 
   useEffect(() => {
     dispatch(getProducts(currentPage, limit, categoryFilter, subcategoryFilter, trademarkFilter))
