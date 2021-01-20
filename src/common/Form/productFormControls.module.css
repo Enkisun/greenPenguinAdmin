@@ -18,8 +18,8 @@
 .inputWrapper {
   display: block;
   width: 350px;
-  height: 58px;
-  padding: 28px 15px 8px;
+  height: 52px;
+  padding: 25px 15px 5px;
   border: 1px solid #4289bb;
   border-radius: 5px;
   font-family: 'Exo', sans-serif;
@@ -47,7 +47,7 @@
 }
 
 .select {
-  font-size: 14px;
+  font-size: 16px;
   cursor: pointer;
   background: url(../../assets/arrow.svg) no-repeat right;
   -webkit-appearance: none;
@@ -77,10 +77,6 @@
   padding: 0;
   background-color: inherit;
   cursor: pointer;
-}
-
-.checkIcon {
-  color: #5f9e52;
 }
 
 .subInput {

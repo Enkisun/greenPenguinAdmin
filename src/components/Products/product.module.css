@@ -4,7 +4,6 @@
   align-items: center;
   justify-content: space-between;
   border-bottom: none;
-  padding: 0 25px;
 }
 
 .tableTd {
@@ -27,29 +26,27 @@
 
 .btnWrapper {
   width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .btn {
   border: none;
-  padding: 0 10px;
-  background-color: #fff;
+  padding: 0;
+  background-color: inherit;
   font-size: .9rem;
   font-weight: 600;
   cursor: pointer;
-  transition: font-size .1s;
   text-transform: uppercase;
   font-family: inherit;
+  color: #bb4253;
+}
+
+.btn:hover {
+  text-decoration: underline;
 }
 
 .editBtn {
   color: #4289bb;
-}
-
-.btn:hover {
-  font-size: 1rem;
-}
-
-.deleteBtn {
-  color: #bb4253;
-  padding: 0 15px;
 }

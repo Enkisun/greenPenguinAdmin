@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import cn from 'classnames'
 import styles from './productFormControls.module.css'
-import {ReactComponent as CheckIcon} from '../../assets/check.svg'
+import {ReactComponent as CloseIcon} from '../../assets/close.svg'
 
 export const Input = ({ label, type, register, errors, required = false }) => {
   return (
@@ -73,11 +73,10 @@ export const Select = ({ label, options, register, errors, value, setValue, sele
        value={value}
        onChange={onChange}
        ref={e => { register(isShowRequiredErrorMessage && { required: `${label} is a required` }); selectRef.current = e }}
-       disabled={(label !== 'Category' && selectedCategory === '') || isActiveSubInput}
+       disabled={(label === 'Subcategory' && selectedCategory === '') || isActiveSubInput}
        className={cn(styles.inputWrapper, styles.select, {[styles.formError]: errors[label], [styles.unit]: label === 'Unit'})}
       >
-        <option className={styles.keyOption} value={value}>{value}</option>
-        <hr />
+        <option value=''></option>
         {options}
         <option className={styles.keyOption}>New</option>
       </select>
@@ -95,7 +94,7 @@ export const Select = ({ label, options, register, errors, value, setValue, sele
       </div>
 
       <button className={styles.iconWrapper} onClick={() => setActiveSubInput(false)} type='button'>
-        <CheckIcon className={cn(styles.checkIcon, {[styles.disabled]: !isActiveSubInput})} />
+        <CloseIcon className={cn({[styles.disabled]: !isActiveSubInput})} />
       </button>
 
       <span className={styles.spanError}>{errors[label]?.message}</span>

@@ -2,12 +2,12 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import categoriesReducer from './categoriesReducer'
 import productsReducer from './productsReducer'
-import unitsReducer from './unitsReducer'
+import secondaryReducer from './secondaryReducer'
 
 const reducers = combineReducers({
   categories: categoriesReducer,
   products: productsReducer,
-  units: unitsReducer,
+  secondary: secondaryReducer,
 });
 
 const store = createStore(reducers, applyMiddleware(thunkMiddleware));

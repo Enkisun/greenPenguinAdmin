@@ -1,4 +1,8 @@
 .container {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
+}
+
+.inactive {
+  background-color: #44691f33;
 }

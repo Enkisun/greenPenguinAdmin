@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getProducts, setCurrentPage } from '../../redux/productsReducer'
-import { getUnits } from '../../redux/unitsReducer'
+import { getProducts, setCurrentPage, setModalWindow } from '../../redux/productsReducer'
+import { getUnits, getTrademarks } from '../../redux/secondaryReducer'
 import { ProductForm } from '../../common/Form/ProductForm'
 import Paginate from '../../common/Paginate'
 import Preloader from '../../common/Preloader'
@@ -10,7 +10,7 @@ import styles from './productsList.module.css'
 
 const ProductsList = () => {
 
-  const [modal, setModal] = useState(false);
+  const [createModal, setCreateModal] = useState(false);
 
   const dispatch = useDispatch();
   const { products, currentPage, limit, loading } = useSelector(state => state.products);
@@ -18,6 +18,7 @@ const ProductsList = () => {
 
   useEffect(() => {
     dispatch(getUnits());
+    dispatch(getTrademarks())
   }, [])
 
   useEffect(() => {
@@ -41,12 +42,17 @@ const ProductsList = () => {
     dispatch(setCurrentPage(newCurrentPage, limit));
   }
 
+  const changeModal = () => {
+    setCreateModal(true);
+    dispatch(setModalWindow(true));
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1 className={styles.headerTitle}>Products List</h1>
-        <button className={styles.createBtn} onClick={() => setModal(true)}>Create a new product</button>
-        { modal && <ProductForm modal={modal} setModal={setModal} /> }
+        <h2 className={styles.headerTitle}>Products List</h2>
+        <button className={styles.createBtn} onClick={changeModal}>Create a new product</button>
+        { createModal && <ProductForm modal={createModal} setModal={setCreateModal} /> }
       </div>
 
       <table className={styles.table}>
@@ -60,14 +66,14 @@ const ProductsList = () => {
             <th className={styles.tableTh}>Price</th>
             <th className={styles.tableTh}>Actions</th>
           </tr>
+
+          { products?.map(product => <Product key={product._id} product={product} deleteProductHandler={deleteProductHandler} dispatch={dispatch} />) }
+
+          { (!loading && products.length === 0) && <p className={styles.emptyList}>Товаров нет</p> }
         </tbody>
       </table>
 
       { loading && <Preloader /> }
-
-      { products?.map(product => <Product key={product._id} product={product} deleteProductHandler={deleteProductHandler} />) }
-
-      { (!loading && products.length === 0) && <p className={styles.emptyList}>Товаров нет</p> }
 
       <Paginate currentPage={currentPage} pageSize={limit} onPageChanged={!loading && onPageChanged} />
     </div>

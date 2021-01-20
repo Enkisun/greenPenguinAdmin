@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { getCategories } from '../../redux/categoriesReducer'
-import { getProducts } from '../../redux/productsReducer'
+import { getProducts, setModalWindow } from '../../redux/productsReducer'
 import { Input, Textarea, Select } from './ProductFormControls'
 import cn from 'classnames'
 import styles from './productForm.module.css'
-import { getUnits } from '../../redux/unitsReducer'
+import { getUnits, getTrademarks } from '../../redux/secondaryReducer'
 
 export const ProductForm = ({ modal, setModal, product }) => {
 
@@ -16,13 +16,14 @@ export const ProductForm = ({ modal, setModal, product }) => {
   const dispatch = useDispatch();
   const { categoriesData, categoryFilter, subcategoryFilter, trademarkFilter } = useSelector(state => state.categories);
   const { currentPage, limit } = useSelector(state => state.products);
-  const unitsData = useSelector(state => state.units.unitsData);
+  const { unitsData, trademarksData } = useSelector(state => state.secondary);
 
   useEffect(() => {
     const onClickOutside = () => {
       const listener = e => {
         if (!productFormRef.current || productFormRef.current.contains(e.target)) return;
         setModal(false);
+        dispatch(setModalWindow(false));
         document.removeEventListener('mousedown', listener);
       };
       document.addEventListener('mousedown', listener);
@@ -47,6 +48,7 @@ export const ProductForm = ({ modal, setModal, product }) => {
 
   const onSubmit = async (data) => {
     setModal(false)
+    dispatch(setModalWindow(false));
     
     const formData = new FormData();
 
@@ -74,6 +76,9 @@ export const ProductForm = ({ modal, setModal, product }) => {
       await fetch(`/units?unit=${data.Unit}`, {method: 'POST'});
       dispatch(getUnits());
 
+      await fetch(`/trademarks?trademark=${data.Trademark}`, {method: 'POST'});
+      dispatch(getTrademarks());
+
       await fetch('/products', {method: product ? 'PUT' : 'POST', body: formData});
       dispatch(getProducts(currentPage, limit, categoryFilter, subcategoryFilter, trademarkFilter));
     } catch (e) {
@@ -93,7 +98,7 @@ export const ProductForm = ({ modal, setModal, product }) => {
     <option value={subcategory.name} key={subcategory._id}>{subcategory.name}</option>
   );
 
-  const trademarkOptions = currentCategory[0]?.trademarks?.map(trademark =>
+  const trademarkOptions = trademarksData?.map(trademark =>
     <option value={trademark.name} key={trademark._id}>{trademark.name}</option>
   );
 
@@ -137,7 +142,6 @@ export const ProductForm = ({ modal, setModal, product }) => {
            errors={errors} 
            value={Trademark} 
            setValue={setValue} 
-           selectedCategory={Category}
           />
 
           <Input label='Name' type='text' register={register} errors={errors} required='true' />

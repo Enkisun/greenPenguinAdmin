@@ -2,6 +2,7 @@ const ADD_PRODUCTS = "ADD_PRODUCTS";
 const DELETE_PRODUCTS = "DELETE_PRODUCTS";
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const SET_TOTAL_PRODUCTS_COUNT = "SET_TOTAL_PRODUCTS_COUNT";
+const SET_MODAL_WINDOW = "SET_MODAL_WINDOW";
 const SET_LOADING = "SET_LOADING";
 
 let initialState = {
@@ -9,6 +10,7 @@ let initialState = {
   currentPage: 1,
   limit: 5,
   totalProductsCount: 0,
+  modalWindow: false,
   loading: false,
 }
 
@@ -34,6 +36,11 @@ const productsReducer = (state = initialState, action) => {
         ...state,
         totalProductsCount: action.totalProductsCount,
       }
+    case SET_MODAL_WINDOW:
+      return {
+        ...state,
+        modalWindow: action.bool,
+      }
     case SET_LOADING:
       return {
         ...state,
@@ -48,6 +55,7 @@ const addProducts = products => ({ type: ADD_PRODUCTS, products });
 const deleteProducts = () => ({ type: DELETE_PRODUCTS })
 const setLoading = bool => ({ type: SET_LOADING, bool });
 const setTotalProductsCount = totalProductsCount => ({ type: SET_TOTAL_PRODUCTS_COUNT, totalProductsCount });
+export const setModalWindow = bool => ({ type: SET_MODAL_WINDOW, bool });
 export const setCurrentPage = currentPage => ({ type: SET_CURRENT_PAGE, currentPage });
 
 export const getProducts = (currentPage, limit, category = '', subcategory = '', trademark = '') => async dispatch => {
