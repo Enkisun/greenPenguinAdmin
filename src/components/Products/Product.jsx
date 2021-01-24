@@ -17,7 +17,7 @@ const Product = ({ product, deleteProductHandler, dispatch }) => {
   return (
     <tr className={styles.tableTr}>
       <td className={styles.tableTd}>
-        <img className={styles.productImage} src={product.image || defaultImage} alt='productImage' />
+        <img className={styles.productImage} src={product.image || defaultImage} alt='product_image' />
       </td>
       <td className={styles.tableTd}>{product.category}{product.subcategory && ` / ${product.subcategory}`}</td>
       <td className={styles.tableTd}>{product.trademark}</td>
