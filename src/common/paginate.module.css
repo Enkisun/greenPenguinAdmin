@@ -15,6 +15,7 @@
   color: #666;
   text-align: center;
   cursor: pointer;
+  outline: none;
 }
 
 .activeDots {
@@ -36,6 +37,7 @@
   text-align: center;
   transition: background-color 1s, color .5s;
   cursor: pointer;
+  outline: none;
 }
 
 .extreme:focus {

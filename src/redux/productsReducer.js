@@ -81,7 +81,7 @@ export const getProducts = (currentPage, limit, category = '', subcategory = '',
     const json = await response.json();
 
     if (json) {
-      await dispatch(setTotalProductsCount(json.totalProductsCount.totalProductsCount));
+      await dispatch(setTotalProductsCount(json.totalProductsCount));
       await dispatch(addProducts(json.products));
     }
   } catch (e) {
